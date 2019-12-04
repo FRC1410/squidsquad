@@ -36,16 +36,19 @@ public final class Constants {
     public static final double BLACK_BLUE_THRESHOLD = 25;
 
     //Auto Tuning
-    public static final double AUTO_FAST_SPEED = 0.8;
+    public static final double AUTO_FAST_SPEED_FORWARD = 0.8;
     public static final double AUTO_FAST_SPEED_LEFT = -0.8;
     public static final double AUTO_FAST_SPEED_RIGHT = 0.8;
-    public static final double AUTO_SLOW_FORWARD_SPEED = 0.2;
+    public static final double AUTO_SLOW_SPEED_FORWARD = 0.2;
     public static final double AUTO_SLOW_SPEED_LEFT = -0.2;
     public static final double AUTO_SLOW_SPEED_RIGHT = 0.2;
     public static final double AUTO_STOP = 0.0;
-    public static final double AUTO_BACKWARD_SPEED = -0.5;
+    public static final double AUTO_FAST_SPEED_BACKWARD = -0.5;
+
     public static final double SKYSTONE_FAR_DISTANCE_THRESHOLD = 10;
     public static final double SKYSTONE_CLOSE_DISTANCE_THRESHOLD = 1;
+
+    public static final int AUTO_WAIT_PERIOD = 100;
 
     //Distance Sensor Constants
     public static final double SKYSTONE_DROP_POINT = 185;
