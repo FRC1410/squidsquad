@@ -21,7 +21,7 @@ public class LightSensor {
         colorSensor.green(); // Green channel value
         colorSensor.blue();  // Blue channel value
 
-        distanceSensor = hwMap.get(DistanceSensor.class, "distance_sensor");
+        distanceSensor = hwMap.get(DistanceSensor.class, "color_sensor");
 
         distanceSensor.getDistance(DistanceUnit.CM);  //Distance in CM
     }
