@@ -51,9 +51,9 @@ public class RedAlliance extends OpMode {
                 break;
             case 3:
                 if (robot.checkRightDistance() < SKYSTONE_DROP_POINT){
-                    robot.strafe(AUTO_FAST_SPEED_RIGHT);
+                    robot.driveStrafe(AUTO_FAST_SPEED_RIGHT);
                 } else {
-                    robot.strafe(0);
+                    robot.driveStrafe(0);
                     step = 4;
                 }
                 break;
@@ -63,11 +63,11 @@ public class RedAlliance extends OpMode {
                 step = 5;
                 break;
             case 5:
-                robot.strafe(AUTO_FAST_SPEED_RIGHT);
+                robot.driveStrafe(AUTO_FAST_SPEED_RIGHT);
                 if (robot.checkLeftDistance() >= firstSkystoneDistance - SKYSTONE_OFFSET) {
-                    robot.strafe(AUTO_FAST_SPEED_RIGHT);
+                    robot.driveStrafe(AUTO_FAST_SPEED_RIGHT);
                 } else {
-                    robot.strafe(0);
+                    robot.driveStrafe(0);
                     if (skystonesGrabbed <= 1) {
                         step = 6;
                     } else {
@@ -86,9 +86,9 @@ public class RedAlliance extends OpMode {
                 break;
             case 7:
                 if (robot.checkBlack() == false){
-                    robot.strafe(AUTO_SLOW_SPEED_RIGHT);
+                    robot.driveStrafe(AUTO_SLOW_SPEED_RIGHT);
                 } else {
-                    robot.strafe(0);
+                    robot.driveStrafe(0);
                     step = 1;
                 }
                 break;

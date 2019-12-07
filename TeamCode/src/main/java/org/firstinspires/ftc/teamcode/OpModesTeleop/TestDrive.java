@@ -51,7 +51,7 @@ public class TestDrive extends OpMode {
 //            robot.driveForwardAndRotate(forwardInput, rotateInput);
 //            telemetry.addData("Driving", "Forward");
 //        } else if (Math.abs(forwardInput) < Math.abs(strafeInput)) {
-//            robot.strafe(strafeInput);
+//            robot.driveStrafe(strafeInput);
 //            telemetry.addData("Driving", "Sideways");
 //
 //        } else {

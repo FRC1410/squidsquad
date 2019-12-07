@@ -32,11 +32,15 @@ public class Robot {                                     //Initialize subsystems
         driveTrain.setSpeeds(speed, -speed, speed, -speed);
     }
 
+    public void drifeForwardStraight (double speed) {
+
+    }
+
     public void driveRotate(double speed) {
         driveTrain.setSpeeds(speed, speed, speed, speed);
     }
 
-    public void driveForwardAndRotate(double fSpeed, double rSpeed) {                         //Checks for rotation direction, then pplies both vectors via multiplication
+    public void driveForwardAndRotate(double fSpeed, double rSpeed) {                         //Checks for rotation direction, then applies both vectors via multiplication
         if (rSpeed > 0) {
             driveTrain.setSpeeds(-fSpeed, fSpeed * (1 - rSpeed), -fSpeed, fSpeed * (1 - rSpeed));
         } else if (rSpeed < 0) {
@@ -46,8 +50,12 @@ public class Robot {                                     //Initialize subsystems
         }
     }
 
-    public void strafe(double speed) {
+    public void driveStrafe(double speed) {
         driveTrain.setSpeeds(-speed, -speed, speed, speed);                                        //Runs opposite angled wheels at each other
+    }
+
+    public void driveStrafeStraight(double speed) {
+
     }
 
     public void driveAll(double fSpeed, double sSpeed, double rSpeed) {
