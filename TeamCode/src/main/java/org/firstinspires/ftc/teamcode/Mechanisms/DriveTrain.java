@@ -27,7 +27,7 @@ class DriveTrain {
     private DcMotor backLeft;
 
     void init(HardwareMap hwMap) {
-        imu = hwMap.get(BNO055IMU.class, "imu");
+        //imu = hwMap.get(BNO055IMU.class, "imu");
 
         frontLeft = hwMap.get(DcMotor.class, "front_left");
         frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -46,11 +46,11 @@ class DriveTrain {
 //        backRight.setDirection(DcMotorSimple.Direction.REVERSE);
 //        frontRight.setDirection(DcMotorSimple.Direction.REVERSE);
 
-        parameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
-        parameters.accelUnit = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
-        parameters.loggingEnabled = false;
-        parameters.mode = BNO055IMU.SensorMode.IMU;
-        imu.initialize(parameters);
+//        parameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
+//        parameters.accelUnit = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
+//        parameters.loggingEnabled = false;
+//        parameters.mode = BNO055IMU.SensorMode.IMU;
+//        imu.initialize(parameters);
     }
 
     void setSpeeds(double flSpeed, double frSpeed, double blSpeed, double brSpeed) {
@@ -74,12 +74,12 @@ class DriveTrain {
                 backRight.getCurrentPosition());
     }
 
-    double getHeading() {
-        Orientation angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
-        return angles.firstAngle - HEADING_OFFSET;
-    }
+//    double getHeading() {
+//        Orientation angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+//        return angles.firstAngle - HEADING_OFFSET;
+//    }
 
     void reportHeading(Telemetry telemetry) {
-        telemetry.addData("Heading", getHeading());
+        //telemetry.addData("Heading", getHeading());
     }
 }

@@ -17,12 +17,11 @@ public class LightSensor {
     void init(HardwareMap hwMap) {
         colorSensor = hwMap.get(ColorSensor.class, "color_sensor");
 
+        distanceSensor = hwMap.get(DistanceSensor.class, "color_sensor");
+
         colorSensor.red();   // Red channel value
         colorSensor.green(); // Green channel value
         colorSensor.blue();  // Blue channel value
-
-        distanceSensor = hwMap.get(DistanceSensor.class, "color_sensor");
-
         distanceSensor.getDistance(DistanceUnit.CM);  //Distance in CM
     }
 

@@ -14,8 +14,10 @@ class Rotator {
     //One of Two Possibilities. If HW Map in Drive Train for rotator does not work, use code bellow
     void init(HardwareMap hwMap) {
         rotator = hwMap.get(DcMotor.class, "rotator");
-        rotator.setPower(0.6);
+        rotator.setPower(1.0);
         rotator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        rotator.setTargetPosition(0);
     }
 
 

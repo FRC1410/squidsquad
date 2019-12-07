@@ -59,7 +59,7 @@ public class Robot {                                     //Initialize subsystems
     }
 
     public void driveAll(double fSpeed, double sSpeed, double rSpeed) {
-        driveTrain.setSpeeds((fSpeed + sSpeed + rSpeed), (-fSpeed + sSpeed + rSpeed), (fSpeed - sSpeed + rSpeed), (-fSpeed - sSpeed + rSpeed));
+        driveTrain.setSpeeds((fSpeed + sSpeed + rSpeed), (-fSpeed - sSpeed + rSpeed), (fSpeed - sSpeed + rSpeed), (-fSpeed + sSpeed + rSpeed));
     }
 
     public void setRotator(int target) {
@@ -92,7 +92,7 @@ public class Robot {                                     //Initialize subsystems
     }
 
     public double checkSkystoneProximity() {
-        return colorSensor.checkProximity();
+        return colorSensor.checkProximity() * 2;
     }
 
     public double checkLeftDistance() {
@@ -103,7 +103,7 @@ public class Robot {                                     //Initialize subsystems
         return distanceSensors.checkRightDistance();
     }
 
-    public double robotOrientation(){ return driveTrain.getHeading(); }
+    //public double robotOrientation(){ return driveTrain.getHeading(); }
 
     public void openClaw() { claw.open(); }
 
@@ -113,6 +113,7 @@ public class Robot {                                     //Initialize subsystems
         colorSensor.reportColors(telemetry);
         colorSensor.reportProximity(telemetry);
         distanceSensors.reportDistances(telemetry);
-        driveTrain.reportHeading(telemetry);
+        rotator.reportEncoders(telemetry);
+        //driveTrain.reportHeading(telemetry);
     }
 }
