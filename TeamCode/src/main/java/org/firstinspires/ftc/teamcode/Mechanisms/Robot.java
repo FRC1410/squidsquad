@@ -62,9 +62,7 @@ public class Robot {                                     //Initialize subsystems
         driveTrain.setSpeeds((fSpeed + sSpeed + rSpeed), (-fSpeed - sSpeed + rSpeed), (fSpeed - sSpeed + rSpeed), (-fSpeed + sSpeed + rSpeed));
     }
 
-    public void setRotator(int target) {
-        rotator.setPosition(target);
-    }
+    public void setRotatorPosition(double target) { rotator.setToPostion(target);}
 
     public boolean checkYellow() {
         if (colorSensor.checkRed() > YELLOW_RED_THRESHOLD && colorSensor.checkGreen() > YELLOW_GREEN_THRESHOLD && colorSensor.checkBlue() < YELLOW_BLUE_THRESHOLD) {

@@ -15,11 +15,13 @@ public class TestDrive extends OpMode {
     private ElapsedTime runtime = new ElapsedTime();
 
     private Robot robot = new Robot();
-    private int currentRotatorPosition = 0;
+    private int targetRotatorPosition = 0;
+    private boolean clawOpen = false;
     // Code to run when the driver hits INIT
     @Override
     public void init() {
         robot.init(hardwareMap);
+//        robot.setRotatorPosition(ROTATOR_HIGH_THRESHOLD);
     }
 
     // Code to run REPEATEDLY after the driver hits PLAY but before they hit STOP
@@ -27,7 +29,7 @@ public class TestDrive extends OpMode {
     public void loop() {
 
         robot.reportSensors(telemetry);
-        telemetry.addData("Target Rotator", currentRotatorPosition);
+        telemetry.addData("Target Rotator", targetRotatorPosition);
         DeadzonedAxis LeftXAxis = DeadzonedAxis.Init(JOYSTICK_1_DEADZONE, X_AXIS, -gamepad1.left_stick_x, gamepad1.left_stick_y);   //Quantum quacks said the y axis is reversed, we'll trust them on it
         DeadzonedAxis LeftYAxis = DeadzonedAxis.Init(JOYSTICK_1_DEADZONE, Y_AXIS, -gamepad1.left_stick_x, gamepad1.left_stick_y);
         DeadzonedAxis RightXAxis = DeadzonedAxis.Init(JOYSTICK_2_DEADZONE, X_AXIS, -gamepad1.right_stick_x, gamepad1.right_stick_y);
@@ -46,7 +48,7 @@ public class TestDrive extends OpMode {
         boolean leftPressed = false;
         boolean rightPressed = false;
 
-        boolean clawOpen = false;
+
 
 //        if (Math.abs(forwardInput) > Math.abs(strafeInput)) {
 //            robot.driveForwardAndRotate(forwardInput, rotateInput);
@@ -68,21 +70,21 @@ public class TestDrive extends OpMode {
 
         telemetry.addData("Rotate Arm", armInput);
 
-        if (gamepad1.left_bumper && !leftPressed && (currentRotatorPosition + ROTATOR_INCREMENT_DOWN >= ROTATOR_LOW_THRESHOLD)) {//Set claw state to Y button state and check for infinite toggle loops
-            currentRotatorPosition += ROTATOR_INCREMENT_DOWN;
+        if (gamepad1.left_bumper && !leftPressed && (targetRotatorPosition + ROTATOR_INCREMENT_DOWN >= ROTATOR_LOW_THRESHOLD)) {//Set claw state to Y button state and check for infinite toggle loops
+            targetRotatorPosition += ROTATOR_INCREMENT_DOWN;
             leftPressed = true;
         } else {
             leftPressed = false;
         }
 
-        if (gamepad1.right_bumper && !rightPressed && (currentRotatorPosition + ROTATOR_INCREMENT_UP <= ROTATOR_HIGH_THRESHOLD)) {
-            currentRotatorPosition += ROTATOR_INCREMENT_UP;
+        if (gamepad1.right_bumper && !rightPressed && (targetRotatorPosition + ROTATOR_INCREMENT_UP <= ROTATOR_HIGH_THRESHOLD)) {
+            targetRotatorPosition += ROTATOR_INCREMENT_UP;
             rightPressed = true;
         } else {
             rightPressed = false;
         }
 
-        robot.setRotator(currentRotatorPosition);
+        robot.setRotatorPosition(targetRotatorPosition);
 
         if (gamepad1.y && !yPressed) {//Set claw state to Y button state and check for infinite toggle loops
             clawOpen = !clawOpen;

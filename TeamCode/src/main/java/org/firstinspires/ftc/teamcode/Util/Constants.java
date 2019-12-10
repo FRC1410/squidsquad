@@ -11,11 +11,21 @@ public final class Constants {
     public static final int Y_AXIS = 1;
 
     //Rotator Constants
-    public static final int ROTATOR_INCREMENT_UP = 100;
-    public static final int ROTATOR_INCREMENT_DOWN = -100;
+    public static final double ROTATOR_HIGH_THRESHOLD = 160;
+    public static final double ROTATOR_LOW_THRESHOLD = 0;
 
-    public static final int ROTATOR_LOW_THRESHOLD = -1000;
-    public static final int ROTATOR_HIGH_THRESHOLD = 1000;
+    public static final int ROTATOR_INCREMENT_UP = 40;
+    public static final int ROTATOR_INCREMENT_DOWN = -40;
+
+    public static final int ROTATOR_OUTER_THRESHOLD = 15;
+    public static final int ROTATOR_INNER_THRESHOLD = 7;
+
+    public static final double ROTATOR_HIGH_SPEED = 0.7;
+    public static final double ROTATOR_LOW_SPEED = 0.5;
+
+    public static final double ROTATOR_DOWN_MODIFIER = -0.6;
+    public static final double ROTATOR_UP_MODIFIER = 1;
+
 
     //Claw constants
     public static final double CLAW_OPEN_POSITION = 0.0;
