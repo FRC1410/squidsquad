@@ -24,45 +24,57 @@ public class BlueAlliance extends OpMode {
 
     @Override
     public void loop(){
+        robot.reportSensors(telemetry);
         switch (step) {
             case 0: //What it Does:
+                telemetry.addData("Auto Step", "0");
                 if (robot.checkSkystoneProximity() >  SKYSTONE_FAR_DISTANCE_THRESHOLD) {
-                    robot.driveForward(AUTO_FAST_SPEED_FORWARD);
+                    robot.driveForward(AUTO_FAST_SPEED_FORWARD, telemetry);
                 } else {
-                    robot.driveForward(0);
+                    robot.driveForward(0, telemetry);
                     step = 1;
                 }
-            break;
+                break;
             case 1: //What it Does:
-                if (robot.checkSkystoneProximity() > SKYSTONE_CLOSE_DISTANCE_THRESHOLD) {
-                    robot.driveForward(AUTO_SLOW_SPEED_FORWARD);
-                } else {
-                    robot.driveForward(0);
+                telemetry.addData("Auto Step", "1");
+                if (robot.checkSkystoneProximity() < SKYSTONE_CLOSE_DISTANCE_THRESHOLD) {
+                    robot.driveForward(0, telemetry);
                     robot.closeClaw();
                     firstSkystoneDistance = robot.checkRightDistance();
                     step = 2;
+//                    robot.driveForward(AUTO_SLOW_SPEED_FORWARD, telemetry);
+                } else {
+//                    robot.driveForward(0, telemetry);
+//                    robot.closeClaw();
+//                    firstSkystoneDistance = robot.checkRightDistance();
+//                    step = 2;
+                    robot.driveForward(AUTO_SLOW_SPEED_FORWARD, telemetry);
                 }
-            break;
+                break;
             case 2: //This is the only arbitrary value
-                robot.driveForward(AUTO_FAST_SPEED_BACKWARD);
+                telemetry.addData("Auto Step", "2");
+                robot.driveForward(-AUTO_SLOW_SPEED_FORWARD, telemetry);
                 robot.waiting(AUTO_WAIT_PERIOD);
-                robot.driveForward(AUTO_STOP);
+                robot.driveForward(AUTO_STOP, telemetry);
                 step = 3;
-            break;
+                break;
             case 3:
+                telemetry.addData("Auto Step", "3");
                 if (robot.checkRightDistance() < SKYSTONE_DROP_POINT){
                     robot.driveStrafe(AUTO_FAST_SPEED_LEFT);
                 } else {
                     robot.driveStrafe(0);
                     step = 4;
                 }
-            break;
+                break;
             case 4:
+                telemetry.addData("Auto Step", "4");
                 robot.openClaw();
                 skystonesGrabbed++;
                 step = 5;
-            break;
+                break;
             case 5:
+                telemetry.addData("Auto Step", "5");
                 robot.driveStrafe(AUTO_FAST_SPEED_RIGHT);
                 if (robot.checkRightDistance() >= firstSkystoneDistance - SKYSTONE_OFFSET) {
                     robot.driveStrafe(AUTO_FAST_SPEED_RIGHT);
@@ -71,27 +83,29 @@ public class BlueAlliance extends OpMode {
                     if (skystonesGrabbed <= 1) {
                         step = 6;
                     } else {
-                        robot.driveAll(0, 0, 0);
+                        robot.driveAll(0, 0, 0, telemetry);
                         telemetry.addData("Auto", "Completed");
                     }
                 }
-            break;
+                break;
             case 6:
+                telemetry.addData("Auto Step", "6");
                 if (robot.checkSkystoneProximity() >  SKYSTONE_FAR_DISTANCE_THRESHOLD) {
-                    robot.driveForward(AUTO_FAST_SPEED_FORWARD);
+                    robot.driveForward(AUTO_FAST_SPEED_FORWARD, telemetry);
                 } else {
-                    robot.driveForward(0);
+                    robot.driveForward(0, telemetry);
                     step = 7;
                 }
-            break;
+                break;
             case 7:
+                telemetry.addData("Auto Step", "7");
                 if (robot.checkBlack() == false){
                     robot.driveStrafe(AUTO_SLOW_SPEED_LEFT);
                 } else {
                     robot.driveStrafe(0);
                     step = 1;
                 }
-            break;
+                break;
 
         }
     }

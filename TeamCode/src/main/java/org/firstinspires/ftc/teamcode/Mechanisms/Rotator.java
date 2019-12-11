@@ -27,7 +27,7 @@ class Rotator {
     }
 
     void setToPostion(double target) {
-        double position = -rotator.getCurrentPosition();
+        double position = Math.abs(rotator.getCurrentPosition());
         double error = target - position;
         double direction, power;
         if (Math.abs(error) < ROTATOR_INNER_THRESHOLD) {
@@ -46,7 +46,7 @@ class Rotator {
             direction = ROTATOR_DOWN_MODIFIER;
         }
 
-        rotator.setPower(power*direction);
+        rotator.setPower(power * direction);
     }
 //    void setSpeeds(double rspeed) {
 //        double largest = 1.0;

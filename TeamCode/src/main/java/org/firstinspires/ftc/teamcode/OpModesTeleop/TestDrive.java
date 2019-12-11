@@ -39,7 +39,10 @@ public class TestDrive extends OpMode {
         double rotateInput = RightXAxis.GetDeadzonedValue();
         double strafeInput = LeftXAxis.GetDeadzonedValue();
         double armInput = RightYAxis.GetDeadzonedValue();
-
+        telemetry.addData("Left X", strafeInput);
+        telemetry.addData("Left Y", forwardInput);
+        telemetry.addData("Right X", rotateInput);
+        telemetry.addData("Right Y", armInput);
         boolean aPressed = false;
         boolean bPressed = false;
         boolean xPressed = false;
@@ -62,7 +65,7 @@ public class TestDrive extends OpMode {
 //            telemetry.addData("Driving", "Rotating"); //If both magnitudes equal each other, rotate in place.
 //        }
 
-        robot.driveAll(forwardInput, strafeInput, rotateInput);
+        robot.driveAll(forwardInput, strafeInput, rotateInput, telemetry);
         telemetry.addData("Forward", forwardInput);
         telemetry.addData("Strafe", strafeInput);
         telemetry.addData("Rotate", rotateInput);
@@ -90,6 +93,9 @@ public class TestDrive extends OpMode {
             clawOpen = !clawOpen;
             yPressed = true;
         } else {
+
+        }
+        if (yPressed == false){
             yPressed = false;
         }
         if (clawOpen == true) {

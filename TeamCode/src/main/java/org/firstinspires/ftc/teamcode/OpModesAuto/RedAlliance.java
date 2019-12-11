@@ -24,29 +24,30 @@ public class RedAlliance extends OpMode {
 
     @Override
     public void loop(){
+        robot.reportSensors(telemetry);
         switch (step) {
-            case 0: //What it Does:
+            case 0:
                 if (robot.checkSkystoneProximity() >  SKYSTONE_FAR_DISTANCE_THRESHOLD) {
-                    robot.driveForward(AUTO_FAST_SPEED_FORWARD);
+                    robot.driveForward(AUTO_FAST_SPEED_FORWARD, telemetry);
                 } else {
-                    robot.driveForward(0);
+                    robot.driveForward(0, telemetry);
                     step = 1;
                 }
                 break;
-            case 1: //What it Does:
+            case 1:
                 if (robot.checkSkystoneProximity() > SKYSTONE_CLOSE_DISTANCE_THRESHOLD) {
-                    robot.driveForward(AUTO_SLOW_SPEED_FORWARD);
+                    robot.driveForward(AUTO_SLOW_SPEED_FORWARD, telemetry);
                 } else {
-                    robot.driveForward(0);
+                    robot.driveForward(0, telemetry);
                     robot.closeClaw();
                     firstSkystoneDistance = robot.checkLeftDistance();
                     step = 2;
                 }
                 break;
             case 2: //This is the only arbitrary value
-                robot.driveForward(AUTO_FAST_SPEED_BACKWARD);
+                robot.driveForward(AUTO_FAST_SPEED_BACKWARD, telemetry);
                 robot.waiting(AUTO_WAIT_PERIOD);
-                robot.driveForward(AUTO_STOP);
+                robot.driveForward(AUTO_STOP, telemetry);
                 step = 3;
                 break;
             case 3:
@@ -71,16 +72,16 @@ public class RedAlliance extends OpMode {
                     if (skystonesGrabbed <= 1) {
                         step = 6;
                     } else {
-                        robot.driveAll(0, 0, 0);
+                        robot.driveAll(0, 0, 0, telemetry);
                         telemetry.addData("Auto", "Completed");
                     }
                 }
                 break;
             case 6:
                 if (robot.checkSkystoneProximity() >  SKYSTONE_FAR_DISTANCE_THRESHOLD) {
-                    robot.driveForward(AUTO_FAST_SPEED_FORWARD);
+                    robot.driveForward(AUTO_FAST_SPEED_FORWARD, telemetry);
                 } else {
-                    robot.driveForward(0);
+                    robot.driveForward(0, telemetry);
                     step = 7;
                 }
                 break;

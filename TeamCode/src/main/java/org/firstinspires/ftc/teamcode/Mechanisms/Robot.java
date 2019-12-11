@@ -28,8 +28,10 @@ public class Robot {                                     //Initialize subsystems
         appContext = hwMap.appContext;
     }
 
-    public void driveForward(double speed) {
+    public void driveForward(double speed, Telemetry telemetry) {
         driveTrain.setSpeeds(speed, -speed, speed, -speed);
+        telemetry.addData("Speeds", speed);
+
     }
 
     public void drifeForwardStraight (double speed) {
@@ -58,8 +60,9 @@ public class Robot {                                     //Initialize subsystems
 
     }
 
-    public void driveAll(double fSpeed, double sSpeed, double rSpeed) {
+    public void driveAll(double fSpeed, double sSpeed, double rSpeed, Telemetry telemetry) {
         driveTrain.setSpeeds((fSpeed + sSpeed + rSpeed), (-fSpeed - sSpeed + rSpeed), (fSpeed - sSpeed + rSpeed), (-fSpeed + sSpeed + rSpeed));
+        //telemetry.addData("Speeds", "%d %d %d", fSpeed, sSpeed, rSpeed);
     }
 
     public void setRotatorPosition(double target) { rotator.setToPostion(target);}
