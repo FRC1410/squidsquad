@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import org.firstinspires.ftc.teamcode.Mechanisms.Robot;
 
 import static org.firstinspires.ftc.teamcode.Util.Constants.*;
+//TODO Remake the logic of this OpMode once done tuning logic on BlueAlliance
 
 @Autonomous()
 public class RedAlliance extends OpMode {
@@ -51,7 +52,7 @@ public class RedAlliance extends OpMode {
                 step = 3;
                 break;
             case 3:
-                if (robot.checkRightDistance() < SKYSTONE_DROP_POINT){
+                if (robot.checkRightDistance() < FAR_DISTANCE_THRESHOLD){
                     robot.driveStrafe(AUTO_FAST_SPEED_RIGHT);
                 } else {
                     robot.driveStrafe(0);

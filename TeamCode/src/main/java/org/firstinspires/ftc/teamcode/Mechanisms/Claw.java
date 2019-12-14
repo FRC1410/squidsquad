@@ -14,7 +14,7 @@ public class Claw {
     }
 
     void open(){
-        claw.setPosition(CLAW_OPEN_POSITION);  //TODO Problem Code, perhapes faulty motor setup
+        claw.setPosition(CLAW_OPEN_POSITION);
     }
     void close() {
         claw.setPosition(CLAW_CLOSED_POSITION);

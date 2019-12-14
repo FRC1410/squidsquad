@@ -33,6 +33,7 @@ public final class Constants {
 
     //IMU Constants
     public static final double HEADING_OFFSET = 0;
+    public static final double ROTATE_HEADING_CHANGE_THRESHOLD = 10;
 
     //Color Sensor
     public static final double COLOR_SCALE_VALUE = 255;
@@ -53,14 +54,15 @@ public final class Constants {
     public static final double AUTO_SLOW_SPEED_LEFT = -0.2;
     public static final double AUTO_SLOW_SPEED_RIGHT = 0.2;
     public static final double AUTO_STOP = 0.0;
-    public static final double AUTO_FAST_SPEED_BACKWARD = 0.2;
+    public static final double AUTO_FAST_SPEED_BACKWARD = 0.6;
 
     public static final double SKYSTONE_FAR_DISTANCE_THRESHOLD = 4;
-    public static final double SKYSTONE_CLOSE_DISTANCE_THRESHOLD = 2;
+    public static final double SKYSTONE_CLOSE_DISTANCE_THRESHOLD = 3;
 
-    public static final int AUTO_WAIT_PERIOD = 100;
+    public static final int AUTO_WAIT_PERIOD = 600;
 
     //Distance Sensor Constants
-    public static final double SKYSTONE_DROP_POINT = 185;
+    public static final double FAR_DISTANCE_THRESHOLD = 126;
+    public static final double CLOSE_DISTANCE_THRESHOLD = 70;
     public static final double SKYSTONE_OFFSET = 3; //Do
 }

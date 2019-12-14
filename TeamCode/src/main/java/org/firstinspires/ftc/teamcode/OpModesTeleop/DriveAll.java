@@ -9,9 +9,8 @@ import org.firstinspires.ftc.teamcode.Mechanisms.BasicMechanisms.DeadzonedAxis;
 
 import static org.firstinspires.ftc.teamcode.Util.Constants.*;
 
-//TODO Rotator
 @TeleOp()
-public class TestDrive extends OpMode {
+public class DriveAll extends OpMode {
     private ElapsedTime runtime = new ElapsedTime();
 
     private Robot robot = new Robot();
@@ -27,6 +26,7 @@ public class TestDrive extends OpMode {
     // Code to run REPEATEDLY after the driver hits PLAY but before they hit STOP
     @Override
     public void loop() {
+        robot.getHeadingAbsolute(telemetry);
 
         robot.reportSensors(telemetry);
         telemetry.addData("Target Rotator", targetRotatorPosition);
@@ -92,12 +92,11 @@ public class TestDrive extends OpMode {
         if (gamepad1.y && !yPressed) {//Set claw state to Y button state and check for infinite toggle loops
             clawOpen = !clawOpen;
             yPressed = true;
-        } else {
-
         }
         if (yPressed == false){
             yPressed = false;
         }
+
         if (clawOpen == true) {
             robot.openClaw();
         } else {
@@ -124,7 +123,7 @@ public class TestDrive extends OpMode {
 ////        runtime.reset();
 ////    }
 ////    @Override
-//    public void loop() {33
+//    public void loop() {
 //        telemetry.addData("Status", "Run Time: " + runtime.toString());
 //    }
     }

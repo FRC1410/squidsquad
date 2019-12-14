@@ -21,14 +21,15 @@ class DriveTrain {
     private BNO055IMU imu;
     private BNO055IMU.Parameters parameters;
 
+    private double heading = 0;
+
     private DcMotor frontLeft;
     private DcMotor frontRight;
     private DcMotor backRight;
     private DcMotor backLeft;
 
     void init(HardwareMap hwMap) {
-        //imu = hwMap.get(BNO055IMU.class, "imu");
-
+        //MecanumDrive Motor Initialization
         frontLeft = hwMap.get(DcMotor.class, "front_left");
         frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         frontRight = hwMap.get(DcMotor.class, "front_right");
@@ -43,14 +44,19 @@ class DriveTrain {
         backLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         backRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-//        backRight.setDirection(DcMotorSimple.Direction.REVERSE);
-//        frontRight.setDirection(DcMotorSimple.Direction.REVERSE);
+        frontRight.setDirection(DcMotorSimple.Direction.REVERSE);
+        backRight.setDirection(DcMotorSimple.Direction.REVERSE);
 
-//        parameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
-//        parameters.accelUnit = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
-//        parameters.loggingEnabled = false;
-//        parameters.mode = BNO055IMU.SensorMode.IMU;
-//        imu.initialize(parameters);
+        //IMU Parameter Initialization
+        parameters = new BNO055IMU.Parameters();
+        parameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
+        parameters.accelUnit = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
+        parameters.loggingEnabled = false;
+        parameters.mode = BNO055IMU.SensorMode.IMU;
+
+        imu = hwMap.get(BNO055IMU.class, "imu");
+
+        imu.initialize(parameters);
     }
 
     void setSpeeds(double flSpeed, double frSpeed, double blSpeed, double brSpeed) {
@@ -74,12 +80,13 @@ class DriveTrain {
                 backRight.getCurrentPosition());
     }
 
-//    double getHeading() {
+    double getHeading() {
 //        Orientation angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
 //        return angles.firstAngle - HEADING_OFFSET;
-//    }
+        return imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle;
+    }
 
     void reportHeading(Telemetry telemetry) {
-        //telemetry.addData("Heading", getHeading());
+        telemetry.addData("Heading", getHeading());
     }
 }

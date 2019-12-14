@@ -11,7 +11,7 @@ import static org.firstinspires.ftc.teamcode.Util.Constants.*;
 public class BlueAlliance extends OpMode {
     private Robot robot = new Robot();
 
-    private int step = 0;
+    private int step = -1;
     private double firstSkystoneDistance;
     private int skystonesGrabbed = 0;
 
@@ -25,16 +25,26 @@ public class BlueAlliance extends OpMode {
     @Override
     public void loop(){
         robot.reportSensors(telemetry);
+        robot.getHeadingAbsolute(telemetry);
+
         switch (step) {
-            case 0: //What it Does:
-                telemetry.addData("Auto Step", "0");
+            case -1: //What it Does:
+                telemetry.addData("Auto Step", "-1");
                 if (robot.checkSkystoneProximity() >  SKYSTONE_FAR_DISTANCE_THRESHOLD) {
                     robot.driveForward(AUTO_FAST_SPEED_FORWARD, telemetry);
                 } else {
                     robot.driveForward(0, telemetry);
-                    step = 1;
+                    step = 0;
                 }
                 break;
+            case 0:
+                telemetry.addData("Auto Step", "0");
+                if (robot.checkBlack() == false){
+                    robot.driveAll(0, AUTO_SLOW_SPEED_RIGHT, 0, telemetry);
+                } else {
+                    robot.driveAll(0, 0, 0, telemetry);
+                    step = 1;
+                }
             case 1: //What it Does:
                 telemetry.addData("Auto Step", "1");
                 if (robot.checkSkystoneProximity() < SKYSTONE_CLOSE_DISTANCE_THRESHOLD) {
@@ -53,56 +63,70 @@ public class BlueAlliance extends OpMode {
                 break;
             case 2: //This is the only arbitrary value
                 telemetry.addData("Auto Step", "2");
-                robot.driveForward(-AUTO_SLOW_SPEED_FORWARD, telemetry);
+                robot.driveForward(AUTO_FAST_SPEED_BACKWARD, telemetry);
                 robot.waiting(AUTO_WAIT_PERIOD);
                 robot.driveForward(AUTO_STOP, telemetry);
                 step = 3;
                 break;
             case 3:
                 telemetry.addData("Auto Step", "3");
-                if (robot.checkRightDistance() < SKYSTONE_DROP_POINT){
-                    robot.driveStrafe(AUTO_FAST_SPEED_LEFT);
+                if (robot.checkRightDistance() == 819.0){                              //robot.checkRightDistance() < SKYSTONE_DROP_POINT
+                    step = 4;                                                                       //robot.checkRightDistance() >= DISTANCE_THRESHOLD
                 } else {
-                    robot.driveStrafe(0);
-                    step = 4;
+                    robot.driveAll(0,AUTO_FAST_SPEED_RIGHT,0, telemetry);
+                    telemetry.addData("Test", "Success");
                 }
                 break;
             case 4:
                 telemetry.addData("Auto Step", "4");
-                robot.openClaw();
-                skystonesGrabbed++;
-                step = 5;
+                if (robot.checkLeftDistance() < CLOSE_DISTANCE_THRESHOLD) {
+                    robot.driveAll(0,0,0,telemetry);
+                    robot.openClaw();
+                    skystonesGrabbed++;
+                    step = 5;
+                } else {
+                    robot.driveAll(0,AUTO_FAST_SPEED_RIGHT,0,telemetry);
+                }
                 break;
             case 5:
                 telemetry.addData("Auto Step", "5");
-                robot.driveStrafe(AUTO_FAST_SPEED_RIGHT);
-                if (robot.checkRightDistance() >= firstSkystoneDistance - SKYSTONE_OFFSET) {
-                    robot.driveStrafe(AUTO_FAST_SPEED_RIGHT);
+                if (robot.checkLeftDistance() < FAR_DISTANCE_THRESHOLD){                              //robot.checkRightDistance() < SKYSTONE_DROP_POINT
+                    robot.driveAll(0,AUTO_FAST_SPEED_LEFT,0, telemetry);
+                    telemetry.addData("Test", "Success");
                 } else {
-                    robot.driveStrafe(0);
-                    if (skystonesGrabbed <= 1) {
-                        step = 6;
+                    robot.driveAll(0,AUTO_FAST_SPEED_LEFT,0, telemetry);
+                    step = 6;
+                }
+                break;
+            case 6:
+                telemetry.addData("Auto Step", "6");
+                if (robot.checkRightDistance() >= firstSkystoneDistance - SKYSTONE_OFFSET) {
+                    robot.driveAll(0,AUTO_SLOW_SPEED_LEFT,0, telemetry);
+                } else {
+                    robot.driveAll(0,0,0,telemetry);
+                    if (skystonesGrabbed <= 2) {
+                        step = 7;
                     } else {
                         robot.driveAll(0, 0, 0, telemetry);
                         telemetry.addData("Auto", "Completed");
                     }
                 }
                 break;
-            case 6:
-                telemetry.addData("Auto Step", "6");
+            case 7:
+                telemetry.addData("Auto Step", "7");
                 if (robot.checkSkystoneProximity() >  SKYSTONE_FAR_DISTANCE_THRESHOLD) {
                     robot.driveForward(AUTO_FAST_SPEED_FORWARD, telemetry);
                 } else {
                     robot.driveForward(0, telemetry);
-                    step = 7;
+                    step = 8;
                 }
                 break;
-            case 7:
-                telemetry.addData("Auto Step", "7");
+            case 8:
+                telemetry.addData("Auto Step", "8");
                 if (robot.checkBlack() == false){
-                    robot.driveStrafe(AUTO_SLOW_SPEED_LEFT);
+                    robot.driveAll(0, AUTO_SLOW_SPEED_RIGHT, 0, telemetry);
                 } else {
-                    robot.driveStrafe(0);
+                    robot.driveAll(0, 0, 0, telemetry);
                     step = 1;
                 }
                 break;

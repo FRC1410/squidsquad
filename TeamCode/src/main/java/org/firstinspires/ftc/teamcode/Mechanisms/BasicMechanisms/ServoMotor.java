@@ -19,7 +19,7 @@ class ServoMotor extends Device {
     @Override
     void run(boolean on, Telemetry telemetry) {
         if (on){
-            servo.setPosition(onLocation); //TODO Problem Code
+            servo.setPosition(onLocation);
         } else {
             servo.setPosition(offLocation);
         }

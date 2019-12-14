@@ -19,8 +19,11 @@ public class Robot {                                     //Initialize subsystems
 
     private Context appContext;
 
+    private double lastHeading = 0;
+
     public void init(HardwareMap hwMap) {
         driveTrain.init(hwMap);
+
         claw.init(hwMap);
         rotator.init(hwMap);
         colorSensor.init(hwMap);
@@ -28,32 +31,35 @@ public class Robot {                                     //Initialize subsystems
         appContext = hwMap.appContext;
     }
 
-    public void driveForward(double speed, Telemetry telemetry) {
-        driveTrain.setSpeeds(speed, -speed, speed, -speed);
+    public void driveForward(double speed, Telemetry telemetry) {       //Positive speed value runs the robot forward
+        driveTrain.setSpeeds(speed, speed, speed, speed);
         telemetry.addData("Speeds", speed);
-
     }
 
     public void drifeForwardStraight (double speed) {
-
+        if (getHeadingChange() < ROTATE_HEADING_CHANGE_THRESHOLD) {
+            driveForwardAndRotate(speed, getHeadingChange()/ ROTATE_HEADING_CHANGE_THRESHOLD);
+        } else {
+            driveForwardAndRotate(speed, Math.abs(getHeadingChange())/getHeadingChange());
+        }
     }
 
-    public void driveRotate(double speed) {
-        driveTrain.setSpeeds(speed, speed, speed, speed);
+    public void driveRotate(double speed) {                     //Positive rotate value makes the robot rotate clockwise
+        driveTrain.setSpeeds(speed, -speed, speed, -speed);
     }
 
     public void driveForwardAndRotate(double fSpeed, double rSpeed) {                         //Checks for rotation direction, then applies both vectors via multiplication
         if (rSpeed > 0) {
-            driveTrain.setSpeeds(-fSpeed, fSpeed * (1 - rSpeed), -fSpeed, fSpeed * (1 - rSpeed));
+            driveTrain.setSpeeds(fSpeed, fSpeed * (1 - rSpeed), fSpeed, fSpeed * (1 - rSpeed));
         } else if (rSpeed < 0) {
-            driveTrain.setSpeeds(-fSpeed * (1 - rSpeed), fSpeed, -fSpeed * (1 - rSpeed), fSpeed);
+            driveTrain.setSpeeds(fSpeed * (1 - rSpeed), fSpeed, fSpeed * (1 - rSpeed), fSpeed);
         } else {
-            driveTrain.setSpeeds(-fSpeed, fSpeed, -fSpeed, fSpeed);
+            driveTrain.setSpeeds(fSpeed, fSpeed, fSpeed, fSpeed);
         }
     }
 
     public void driveStrafe(double speed) {
-        driveTrain.setSpeeds(-speed, -speed, speed, speed);                                        //Runs opposite angled wheels at each other
+        driveTrain.setSpeeds(-speed, speed, -speed, speed);        //Positive strafe value makes the robot strafe right
     }
 
     public void driveStrafeStraight(double speed) {
@@ -61,11 +67,26 @@ public class Robot {                                     //Initialize subsystems
     }
 
     public void driveAll(double fSpeed, double sSpeed, double rSpeed, Telemetry telemetry) {
-        driveTrain.setSpeeds((fSpeed + sSpeed + rSpeed), (-fSpeed - sSpeed + rSpeed), (fSpeed - sSpeed + rSpeed), (-fSpeed + sSpeed + rSpeed));
+        driveTrain.setSpeeds((fSpeed + sSpeed + rSpeed), (fSpeed + sSpeed - rSpeed), (fSpeed - sSpeed + rSpeed), (fSpeed - sSpeed - rSpeed));
         //telemetry.addData("Speeds", "%d %d %d", fSpeed, sSpeed, rSpeed);
     }
 
-    public void setRotatorPosition(double target) { rotator.setToPostion(target);}
+    public double getHeadingAbsolute(Telemetry telemetry) {
+        telemetry.addData("IMU Heading Absolute", driveTrain.getHeading() + HEADING_OFFSET);
+        return driveTrain.getHeading() + HEADING_OFFSET;
+    }
+
+    public void setLastHeading() {
+        lastHeading = driveTrain.getHeading();
+    }
+
+    public double getHeadingChange() {
+        return driveTrain.getHeading() - lastHeading;                   //If heading change is positive, robot has rotated clockwise, and vice versa.
+    }
+
+    public void setRotatorPosition(double target) {
+        rotator.setToPostion(target);
+    }
 
     public boolean checkYellow() {
         if (colorSensor.checkRed() > YELLOW_RED_THRESHOLD && colorSensor.checkGreen() > YELLOW_GREEN_THRESHOLD && colorSensor.checkBlue() < YELLOW_BLUE_THRESHOLD) {
@@ -100,15 +121,16 @@ public class Robot {                                     //Initialize subsystems
         return distanceSensors.checkLeftDistance();
     }
 
-    public double checkRightDistance() {
-        return distanceSensors.checkRightDistance();
-    }
+    public double checkRightDistance() { return distanceSensors.checkRightDistance(); }
 
     //public double robotOrientation(){ return driveTrain.getHeading(); }
 
     public void openClaw() { claw.open(); }
 
     public void closeClaw() { claw.close(); }
+
+    public void reportDriveTrain(Telemetry telemetry) {
+        driveTrain.reportEncoders(telemetry); }
 
     public void reportSensors(Telemetry telemetry) {
         colorSensor.reportColors(telemetry);
