@@ -16,10 +16,12 @@ public class DriveAll extends OpMode {
     private Robot robot = new Robot();
     private int targetRotatorPosition = 0;
     private boolean clawOpen = false;
+    private boolean foundationClawOpen = true;
     // Code to run when the driver hits INIT
     @Override
     public void init() {
         robot.init(hardwareMap);
+        runtime.reset();
 //        robot.setRotatorPosition(ROTATOR_HIGH_THRESHOLD);
     }
 
@@ -29,6 +31,7 @@ public class DriveAll extends OpMode {
         robot.getHeadingAbsolute(telemetry);
 
         robot.reportSensors(telemetry);
+        telemetry.addData("Robot", "Run Time: " + runtime.toString());
         telemetry.addData("Target Rotator", targetRotatorPosition);
         DeadzonedAxis LeftXAxis = DeadzonedAxis.Init(JOYSTICK_1_DEADZONE, X_AXIS, -gamepad1.left_stick_x, gamepad1.left_stick_y);   //Quantum quacks said the y axis is reversed, we'll trust them on it
         DeadzonedAxis LeftYAxis = DeadzonedAxis.Init(JOYSTICK_1_DEADZONE, Y_AXIS, -gamepad1.left_stick_x, gamepad1.left_stick_y);
@@ -89,7 +92,7 @@ public class DriveAll extends OpMode {
 
         robot.setRotatorPosition(targetRotatorPosition);
 
-        if (gamepad1.y && !yPressed) {//Set claw state to Y button state and check for infinite toggle loops
+        if (gamepad1.right_trigger > RIGHT_TRIGGER_THRESHOLD && !yPressed) {//Set claw state to Y button state and check for infinite toggle loops
             clawOpen = !clawOpen;
             yPressed = true;
         }
@@ -101,6 +104,20 @@ public class DriveAll extends OpMode {
             robot.openClaw();
         } else {
             robot.closeClaw();
+        }
+
+        if (gamepad1.a && !aPressed) {//Set claw state to Y button state and check for infinite toggle loops
+            foundationClawOpen = !foundationClawOpen;
+            aPressed = true;
+        }
+        if (aPressed == false){
+            aPressed = false;
+        }
+
+        if (foundationClawOpen == true) {
+            robot.openFoundationClaw();
+        } else {
+            robot.closeFoundationClaw();
         }
 
 //        if (gamepad1.y && !yPressed) {//Set claw state to Y button state and check for infinite toggle loops
@@ -117,7 +134,7 @@ public class DriveAll extends OpMode {
 //        }
 
 //    }
-        //Elapsed Time Stuff
+
 //    @Override
 ////    public void start() {
 ////        runtime.reset();

@@ -14,6 +14,7 @@ public class Robot {                                     //Initialize subsystems
     private DriveTrain driveTrain = new DriveTrain();
     private Rotator rotator = new Rotator();
     private Claw claw = new Claw();
+    private FoundationClaw foundationClaw = new FoundationClaw();
     private LightSensor colorSensor = new LightSensor();
     private DistanceSensors distanceSensors = new DistanceSensors();
 
@@ -24,6 +25,7 @@ public class Robot {                                     //Initialize subsystems
     public void init(HardwareMap hwMap) {
         driveTrain.init(hwMap);
 
+        foundationClaw.init(hwMap);
         claw.init(hwMap);
         rotator.init(hwMap);
         colorSensor.init(hwMap);
@@ -37,11 +39,7 @@ public class Robot {                                     //Initialize subsystems
     }
 
     public void drifeForwardStraight (double speed) {
-        if (getHeadingChange() < ROTATE_HEADING_CHANGE_THRESHOLD) {
-            driveForwardAndRotate(speed, getHeadingChange()/ ROTATE_HEADING_CHANGE_THRESHOLD);
-        } else {
-            driveForwardAndRotate(speed, Math.abs(getHeadingChange())/getHeadingChange());
-        }
+        driveForwardAndRotate(speed, getHeadingChange()/ ROTATE_HEADING_CHANGE_THRESHOLD);
     }
 
     public void driveRotate(double speed) {                     //Positive rotate value makes the robot rotate clockwise
@@ -89,7 +87,7 @@ public class Robot {                                     //Initialize subsystems
     }
 
     public boolean checkYellow() {
-        if (colorSensor.checkRed() > YELLOW_RED_THRESHOLD && colorSensor.checkGreen() > YELLOW_GREEN_THRESHOLD && colorSensor.checkBlue() < YELLOW_BLUE_THRESHOLD) {
+        if ((colorSensor.checkRed() + colorSensor.checkGreen()) > colorSensor.checkBlue()*2) { //colorSensor.checkRed() > YELLOW_RED_THRESHOLD && colorSensor.checkGreen() > YELLOW_GREEN_THRESHOLD && colorSensor.checkBlue() < YELLOW_BLUE_THRESHOLD
             return true;
         } else {
             return false;
@@ -97,12 +95,15 @@ public class Robot {                                     //Initialize subsystems
     }
 
     public boolean checkBlack() {
-        if (colorSensor.checkRed() < BLACK_RED_THRESHOLD && colorSensor.checkGreen() < BLACK_GREEN_THRESHOLD && colorSensor.checkBlue() < BLACK_BLUE_THRESHOLD) {
-            return true;
-        } else {
+        if (colorSensor.checkAlpha() > BLACK_AND_YELLOW_THRESHOLD) {
+                //colorSensor.checkRed() < BLACK_RED_THRESHOLD && colorSensor.checkGreen() < BLACK_GREEN_THRESHOLD && colorSensor.checkBlue() < BLACK_BLUE_THRESHOLD
             return false;
+        } else {
+            return true;
         }
     }
+
+
 
     public void waiting(int millis){
         if(Thread.currentThread().isInterrupted()) return;
@@ -128,6 +129,10 @@ public class Robot {                                     //Initialize subsystems
     public void openClaw() { claw.open(); }
 
     public void closeClaw() { claw.close(); }
+
+    public void openFoundationClaw() { foundationClaw.open(); }
+
+    public void closeFoundationClaw() { foundationClaw.close(); }
 
     public void reportDriveTrain(Telemetry telemetry) {
         driveTrain.reportEncoders(telemetry); }

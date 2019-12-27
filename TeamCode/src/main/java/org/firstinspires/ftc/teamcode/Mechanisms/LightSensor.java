@@ -22,13 +22,15 @@ public class LightSensor {
         colorSensor.red();   // Red channel value
         colorSensor.green(); // Green channel value
         colorSensor.blue();  // Blue channel value
+        colorSensor.alpha();
         distanceSensor.getDistance(DistanceUnit.CM);  //Distance in CM
     }
 
     void reportColors(Telemetry telemetry) {
         telemetry.addData("Red", colorSensor.red());
-        telemetry.addData("Green", "%d", colorSensor.green());
-        telemetry.addData("Blue", "%d", colorSensor.blue());
+        telemetry.addData("Green", colorSensor.green());
+        telemetry.addData("Blue", colorSensor.blue());
+        telemetry.addData("Alpha", colorSensor.alpha());
     }
 
     void reportProximity(Telemetry telemetry) {

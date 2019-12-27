@@ -23,11 +23,12 @@ class Rotator {
 
 
     void reportEncoders(Telemetry telemetry) {
-        telemetry.addData("Encoder", "%d", rotator.getCurrentPosition());
+        telemetry.addData("Encoder", "%d", (Math.abs(rotator.getCurrentPosition())*(90/83)));
     }
 
     void setToPostion(double target) {
-        double position = Math.abs(rotator.getCurrentPosition());
+        double position = (Math.abs(rotator.getCurrentPosition())*(90/83));
+
         double error = target - position;
         double direction, power;
         if (Math.abs(error) < ROTATOR_INNER_THRESHOLD) {
