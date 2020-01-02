@@ -75,4 +75,9 @@ public final class Constants {
     public static final double FAR_DISTANCE_THRESHOLD = 126;
     public static final double CLOSE_DISTANCE_THRESHOLD = 70;
     public static final double SKYSTONE_OFFSET = 50; //"Do this and git gud" - Santi
+
+    //Camera Constants
+    public static final float camXRotate = 0;
+    public final static float camYRotate = 0;
+    public static final float camZRotate = 0;
 }
