@@ -10,21 +10,21 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 import static org.firstinspires.ftc.teamcode.Util.Constants.*;
 
-public class Robot {                                     //Initialize subsystems below, otherwise shit hits the fan
+public class Robot { //Initialize subsystems below, otherwise shit hits the fn
     private DriveTrain driveTrain = new DriveTrain();
     private Rotator rotator = new Rotator();
     private Claw claw = new Claw();
     private FoundationClaw foundationClaw = new FoundationClaw();
     private LightSensor colorSensor = new LightSensor();
     private DistanceSensors distanceSensors = new DistanceSensors();
-
+    private Lifecam lifecam = new Lifecam();
     private Context appContext;
 
     private double lastHeading = 0;
 
     public void init(HardwareMap hwMap) {
         driveTrain.init(hwMap);
-
+        lifecam.init(hwMap);
         foundationClaw.init(hwMap);
         claw.init(hwMap);
         rotator.init(hwMap);

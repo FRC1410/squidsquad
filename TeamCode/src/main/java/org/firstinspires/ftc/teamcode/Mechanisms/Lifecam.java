@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Singletons;
+package org.firstinspires.ftc.teamcode.Mechanisms;
 
 import com.vuforia.Frame;
 import android.content.Context;
@@ -33,7 +33,7 @@ import java.util.Locale;
 
 import org.firstinspires.ftc.teamcode.Util.Constants.*;
 
-public class VuforiaSuperstructure {
+public class Lifecam {
 
     private OpenGLMatrix lastLocation = null;
     private VuforiaLocalizer vuforia = null;
