@@ -75,14 +75,14 @@ public class BlueSkystone extends OpMode {
                 if (robot.checkRightDistance() == 819.0){                              //robot.checkRightDistance() < SKYSTONE_DROP_POINT
                     step = 4;                                                                       //robot.checkRightDistance() >= DISTANCE_THRESHOLD
                 } else {
-                    robot.driveAll(0,AUTO_FAST_SPEED_RIGHT,0, telemetry);
+                    robot.driveAll(0, AUTO_FAST_SPEED_RIGHT,0, telemetry);
                     telemetry.addData("Test", "Success");
                 }
                 break;
             case 4:
                 telemetry.addData("Auto Step", "4");
                 if (robot.checkLeftDistance() < CLOSE_DISTANCE_THRESHOLD) {
-                    robot.driveAll(0,0,0,telemetry);
+                    robot.driveAll(0,0,0, telemetry);
                     robot.openClaw();
                     robot.setRotatorPosition(0);
                     skystonesGrabbed++;
