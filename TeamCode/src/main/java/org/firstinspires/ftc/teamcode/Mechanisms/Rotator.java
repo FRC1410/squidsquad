@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode.Mechanisms;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
@@ -31,21 +30,26 @@ class Rotator {
 
         double error = target - position;
         double direction, power;
-        if (Math.abs(error) < ROTATOR_INNER_THRESHOLD) {
-            power = 0.0;
-        } else if (Math.abs(error) > ROTATOR_OUTER_THRESHOLD) {
-            power = ROTATOR_HIGH_SPEED;
-        } else if (Math.abs(error) < ROTATOR_OUTER_THRESHOLD){
-            power = ROTATOR_LOW_SPEED;
-        } else {
-            power = ROTATOR_LOW_SPEED;
-        }
 
-        if (error < 0){
-            direction = ROTATOR_UP_MODIFIER;
-        } else {
-            direction = ROTATOR_DOWN_MODIFIER;
-        }
+            if (Math.abs(error) < ROTATOR_INNER_THRESHOLD) {
+                power = 0.0;
+            } else if (Math.abs(error) > ROTATOR_OUTER_THRESHOLD) {
+                power = ROTATOR_HIGH_SPEED;
+            } else if (Math.abs(error) < ROTATOR_OUTER_THRESHOLD) {
+                power = ROTATOR_MEDIUM_SPEED;
+                if (Math.abs(error) < ROTATOR_MEDIUM_THRESHOLD){
+                    power = ROTATOR_LOW_SPEED;
+                }
+            } else {
+                power = ROTATOR_LOW_SPEED;
+            }
+
+            if (error < 0) {
+                direction = ROTATOR_DOWN_MODIFIER;
+            } else {
+                direction = ROTATOR_UP_MODIFIER;
+            }
+
 
         rotator.setPower(power * direction);
     }
@@ -58,5 +62,9 @@ class Rotator {
 
     void setPosition(int position) {
         rotator.setTargetPosition(position);
+    }
+
+    double getEncoder(){
+        return rotator.getCurrentPosition();
     }
 }

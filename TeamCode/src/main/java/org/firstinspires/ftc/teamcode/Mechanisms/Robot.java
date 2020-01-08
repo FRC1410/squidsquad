@@ -11,6 +11,8 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import static org.firstinspires.ftc.teamcode.Util.Constants.*;
 
 public class Robot { //Initialize subsystems below, otherwise shit hits the fn
+    public double min;
+    public double max;
     private DriveTrain driveTrain = new DriveTrain();
     private Rotator rotator = new Rotator();
     private Claw claw = new Claw();
@@ -86,6 +88,10 @@ public class Robot { //Initialize subsystems below, otherwise shit hits the fn
         rotator.setToPostion(target);
     }
 
+    public double rotatorEncoder() {
+        return rotator.getEncoder();
+    }
+
     public boolean checkYellow() {
         if ((colorSensor.checkRed() + colorSensor.checkGreen()) > colorSensor.checkBlue()*2) { //colorSensor.checkRed() > YELLOW_RED_THRESHOLD && colorSensor.checkGreen() > YELLOW_GREEN_THRESHOLD && colorSensor.checkBlue() < YELLOW_BLUE_THRESHOLD
             return true;
@@ -144,4 +150,6 @@ public class Robot { //Initialize subsystems below, otherwise shit hits the fn
         rotator.reportEncoders(telemetry);
         //driveTrain.reportHeading(telemetry);
     }
+
+    public double cameraReading(Telemetry telemetry, double reading) { return reading; }
 }
