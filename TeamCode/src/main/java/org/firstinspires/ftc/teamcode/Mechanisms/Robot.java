@@ -19,14 +19,12 @@ public class Robot { //Initialize subsystems below, otherwise shit hits the fn
     private FoundationClaw foundationClaw = new FoundationClaw();
     private LightSensor colorSensor = new LightSensor();
     private DistanceSensors distanceSensors = new DistanceSensors();
-    private Lifecam lifecam = new Lifecam();
     private Context appContext;
 
     private double lastHeading = 0;
 
     public void init(HardwareMap hwMap) {
         driveTrain.init(hwMap);
-        lifecam.init(hwMap);
         foundationClaw.init(hwMap);
         claw.init(hwMap);
         rotator.init(hwMap);
@@ -40,7 +38,7 @@ public class Robot { //Initialize subsystems below, otherwise shit hits the fn
         telemetry.addData("Speeds", speed);
     }
 
-    public void drifeForwardStraight (double speed) {
+    public void driveForwardStraight (double speed) {
         driveForwardAndRotate(speed, getHeadingChange()/ ROTATE_HEADING_CHANGE_THRESHOLD);
     }
 

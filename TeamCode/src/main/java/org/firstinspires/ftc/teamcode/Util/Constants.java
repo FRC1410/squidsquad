@@ -22,15 +22,15 @@ public class Constants {
 
     public static final double ROTATOR_INCREMENT_SCALE = 2;
 
-    public static final double ROTATOR_HIGH_THRESHOLD = ROTATOR_HIGH_DEGREE_THRESHOLD*ROTATOR_ENCODER_SCALAR_QUANTITY;
-    public static final double ROTATOR_LOW_THRESHOLD = ROTATOR_LOW_DEGREE_THRESHOLD*ROTATOR_ENCODER_SCALAR_QUANTITY;
+    public static final double ROTATOR_HIGH_THRESHOLD = (ROTATOR_HIGH_DEGREE_THRESHOLD - ROTATOR_LOW_DEGREE_THRESHOLD)*ROTATOR_ENCODER_SCALAR_QUANTITY;
+    public static final double ROTATOR_LOW_THRESHOLD = (ROTATOR_LOW_DEGREE_THRESHOLD - ROTATOR_LOW_DEGREE_THRESHOLD)*ROTATOR_ENCODER_SCALAR_QUANTITY;
 
-    public static final double ROTATOR_INCREMENT_UP = ROTATOR_HIGH_THRESHOLD/ROTATOR_INCREMENT_SCALE;
-    public static final double ROTATOR_INCREMENT_DOWN = -ROTATOR_HIGH_THRESHOLD/ROTATOR_INCREMENT_SCALE;
+    public static final double ROTATOR_INCREMENT_UP = (ROTATOR_HIGH_THRESHOLD - ROTATOR_LOW_DEGREE_THRESHOLD)/ROTATOR_INCREMENT_SCALE;
+    public static final double ROTATOR_INCREMENT_DOWN = -(ROTATOR_HIGH_THRESHOLD - ROTATOR_LOW_DEGREE_THRESHOLD)/ROTATOR_INCREMENT_SCALE;
 
     public static final int ROTATOR_OUTER_THRESHOLD = 50;
     public static final int ROTATOR_MEDIUM_THRESHOLD = 40;
-    public static final int ROTATOR_INNER_THRESHOLD = 30;
+    public static final int ROTATOR_INNER_THRESHOLD = 25;
 
     public static final double ROTATOR_HIGH_SPEED = 0.6;
     public static final double ROTATOR_MEDIUM_SPEED = 0.4;
@@ -43,6 +43,7 @@ public class Constants {
     //Claw constants
     public static final double CLAW_OPEN_POSITION = 0.0;
      public static final double CLAW_CLOSED_POSITION = 1.0;
+
     public static final double RIGHT_TRIGGER_THRESHOLD = 0.3;
 
     //IMU Constants
@@ -71,6 +72,7 @@ public class Constants {
     public static final double AUTO_SLOW_SPEED_RIGHT = 0.2;
     public static final double AUTO_STOP = 0.0;
     public static final double AUTO_FAST_SPEED_BACKWARD = 0.4;
+    public static final double AUTO_SLOW_SPEED_BACKWARD = 0.15;
     public static final double AUTO_ROTATE_RIGHT = 0.3;
     public static final double AUTO_ROTATE_LEFT = -0.3;
     public static final double AUTO_STRAFE_RIGHT = 0.6;

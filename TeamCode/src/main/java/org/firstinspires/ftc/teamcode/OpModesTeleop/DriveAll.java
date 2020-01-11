@@ -14,6 +14,7 @@ public class DriveAll extends OpMode {
     private ElapsedTime runtime = new ElapsedTime();
 
     private Robot robot = new Robot();
+
     private double targetRotatorPosition = ROTATOR_HIGH_THRESHOLD;
     private boolean clawOpen = false;
     private boolean foundationClawOpen = true;

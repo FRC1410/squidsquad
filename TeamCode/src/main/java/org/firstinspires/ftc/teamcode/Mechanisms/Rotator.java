@@ -20,7 +20,6 @@ class Rotator {
 //        rotator.setTargetPosition(0);
     }
 
-
     void reportEncoders(Telemetry telemetry) {
         telemetry.addData("Encoder", "%d", (Math.abs(rotator.getCurrentPosition())*(90/83)));
     }
