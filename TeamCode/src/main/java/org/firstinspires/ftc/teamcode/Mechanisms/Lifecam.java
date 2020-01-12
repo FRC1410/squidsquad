@@ -27,6 +27,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackableDefau
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
 import org.firstinspires.ftc.robotcore.internal.system.AppUtil;
 
+
 import static org.firstinspires.ftc.robotcore.external.navigation.AngleUnit.DEGREES;
 import static org.firstinspires.ftc.robotcore.external.navigation.AxesOrder.XYZ;
 import static org.firstinspires.ftc.robotcore.external.navigation.AxesOrder.YZX;
@@ -59,12 +60,16 @@ public class Lifecam {
     private VuforiaTrackables targetsSkyStone;
 
 
+
+
     public void init(HardwareMap hwMap) {
         targetsSkyStone = targetsSkyStone = this.vuforia.loadTrackablesFromAsset("Skystone");
         lifecam = hwMap.get(WebcamName.class, "Webcam 1");
         appContext = hwMap.appContext;
         int cameraMonitorViewId = hwMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hwMap.appContext.getPackageName());
         VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters(cameraMonitorViewId);
+        VuforiaTrackable stoneTarget = targetsSkyStone.get(0);
+        stoneTarget.setName("Stone Target");
 
         parameters.vuforiaLicenseKey = "Acbdwqb/////AAABmZYct0JfVkJUpxqC2cEf69Yb6bmcZvsuNyFPMy5e0TpYgmivsx0lng3Nqh1Z3MyNr6XJbfjkFxDMWjOh6K85lUEXCMyB7fBO3FnagQBmA6oPJuuKUNknLxhTeZYfEZfCmOU5YwR5U1pBtQ6q0PdUbv/C4IxbUKlvgZakeqPAECg4sn23k2gLx6XC2xN8JToJeO3YNQ/2Tp1j+9aYwCLWVzcrrZ6d9OU+MakNZg5Jhj85wMVZPxX4w4zCH72XANX9P2qbq7Rqtd1YQLG8pFDrHyBvun/UdHo3XC731TDRApE0CWLXC1DBYcOYD3WBH3oXBAg2cs9mUsgmf8+fxWiMVPmT8KQ8rWqeZ4D9G4y8WxHI\n";
         parameters.cameraDirection = CAMERA_CHOICE;

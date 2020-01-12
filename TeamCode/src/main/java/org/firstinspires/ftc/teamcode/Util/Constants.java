@@ -30,7 +30,7 @@ public class Constants {
 
     public static final int ROTATOR_OUTER_THRESHOLD = 50;
     public static final int ROTATOR_MEDIUM_THRESHOLD = 40;
-    public static final int ROTATOR_INNER_THRESHOLD = 25;
+    public static final int ROTATOR_INNER_THRESHOLD = 20;
 
     public static final double ROTATOR_HIGH_SPEED = 0.6;
     public static final double ROTATOR_MEDIUM_SPEED = 0.4;
@@ -64,14 +64,14 @@ public class Constants {
     public static final double BLACK_AND_YELLOW_THRESHOLD = 30000;
 
     //Auto Tuning
-    public static final double AUTO_FAST_SPEED_FORWARD = -0.15;
+    public static final double AUTO_FAST_SPEED_FORWARD = -0.7;
     public static final double AUTO_FAST_SPEED_LEFT = -0.8;
     public static final double AUTO_FAST_SPEED_RIGHT = 0.8;
     public static final double AUTO_SLOW_SPEED_FORWARD = -0.11;
     public static final double AUTO_SLOW_SPEED_LEFT = -0.2;
     public static final double AUTO_SLOW_SPEED_RIGHT = 0.2;
     public static final double AUTO_STOP = 0.0;
-    public static final double AUTO_FAST_SPEED_BACKWARD = 0.4;
+    public static final double AUTO_FAST_SPEED_BACKWARD = 0.5;
     public static final double AUTO_SLOW_SPEED_BACKWARD = 0.15;
     public static final double AUTO_ROTATE_RIGHT = 0.3;
     public static final double AUTO_ROTATE_LEFT = -0.3;

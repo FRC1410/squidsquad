@@ -19,6 +19,7 @@ public class LinearSkystoneSearch extends LinearOpMode {
         /* <Initialization Stage> */
         robot.init(hardwareMap);
         lifecam.init(hardwareMap);
+        waitForStart();
 
         while (opModeIsActive()) {
             double distance = lifecam.whereIsSkystone(telemetry);

@@ -25,6 +25,7 @@ public class LinearBlueSkystone extends LinearOpMode {
 
         robot.openClaw();
         robot.setRotatorPosition(0);
+        waitForStart();
 
         while (opModeIsActive()) {
             /* <Main Stage> */
