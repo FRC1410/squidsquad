@@ -4,7 +4,6 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.Mechanisms.Robot;
-import org.firstinspires.ftc.teamcode.Mechanisms.Lifecam;
 
 import static org.firstinspires.ftc.teamcode.Util.Constants.*;
 

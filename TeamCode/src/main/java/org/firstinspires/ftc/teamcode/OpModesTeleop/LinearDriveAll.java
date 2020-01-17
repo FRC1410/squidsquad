@@ -31,6 +31,7 @@ public class LinearDriveAll extends LinearOpMode {
         /* <Initialization Stage> */
         robot.init(hardwareMap);
 
+        waitForStart();
         while (opModeIsActive()) {
             /* <Main Stage> */
             robot.getHeadingAbsolute(telemetry);

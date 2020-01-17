@@ -67,8 +67,8 @@ public class Constants {
     public static final double AUTO_FAST_SPEED_FORWARD = -0.7;
     public static final double AUTO_FAST_SPEED_LEFT = -0.8;
     public static final double AUTO_FAST_SPEED_RIGHT = 0.8;
-    public static final double AUTO_SLOW_SPEED_FORWARD = -0.11;
-    public static final double AUTO_SLOW_SPEED_LEFT = -0.2;
+    public static final double AUTO_SLOW_SPEED_FORWARD = -0.4;
+    public static final double AUTO_SLOW_SPEED_LEFT = -0.1;
     public static final double AUTO_SLOW_SPEED_RIGHT = 0.2;
     public static final double AUTO_STOP = 0.0;
     public static final double AUTO_FAST_SPEED_BACKWARD = 0.5;
@@ -100,4 +100,8 @@ public class Constants {
     public static final float CAMERA_VERTICAL_DISPLACEMENT = 1f * mmPerInch;   // eg: Camera is 8 Inches above ground
     public static final float CAMERA_LEFT_DISPLACEMENT = 3.0f * mmPerInch;     // eg: Camera is ON the robot's center line
     public static double NO_TARGET = -2000;
+
+    public static final double SKYSTONE_X_LOCATION = 0.0;
+    public static final double SKYSTONE_Y_LOCATION = 3.0;
+    public static final double SKYSTONE_Z_LOCATION = 0.0;
 }
