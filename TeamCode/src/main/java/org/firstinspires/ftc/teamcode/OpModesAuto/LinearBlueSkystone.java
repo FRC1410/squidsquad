@@ -13,7 +13,7 @@ public class LinearBlueSkystone extends LinearOpMode {
     private Robot robot = new Robot();
     private SkystoneSearch lifecam = new SkystoneSearch();
 
-    private int step = -1;
+    private int step = -2;
     private double firstSkystoneDistance;
     private int skystonesGrabbed = 0;
 
@@ -21,7 +21,7 @@ public class LinearBlueSkystone extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         /* <Initialization Stage> */
         robot.init(hardwareMap);
-
+        lifecam.init(hardwareMap);
 
         robot.openClaw();
         robot.setRotatorPosition(0);
@@ -30,17 +30,30 @@ public class LinearBlueSkystone extends LinearOpMode {
 
         while (opModeIsActive()) {
             /* <Main Stage> */
-            lifecam.vision(hardwareMap, telemetry);
+            lifecam.vision(telemetry);
+            telemetry.addData("X", lifecam.X);
+            telemetry.addData("Y", lifecam.Y);
+            telemetry.addData("Z", lifecam.Z);
+            telemetry.addData("Can See Skystone", lifecam.vision(telemetry));
             switch (step) {
-                case -1:
-                    telemetry.addData("Auto Step", "-1");
+                case -2:
+                    telemetry.addData("Auto Step", "-2");
                     robot.driveAll(AUTO_FAST_SPEED_FORWARD, 0, 0, telemetry);
-                    robot.waiting(300);
+                    robot.waiting(400);
                     robot.driveAll(0, 0, 0, telemetry);
-                    if (lifecam.vision(hardwareMap, telemetry)) {
+                    step = -1;
+                    telemetry.update();
+                    break;
+                case -1:
+                    telemetry.addData("Auto Step" , "-1");
+                    if (lifecam.vision(telemetry)) {
                         step = 0;
+                        telemetry.addData("Case -1", "If");
+                        telemetry.update();
                     } else {
-                        robot.driveAll(0, -AUTO_SLOW_SPEED_RIGHT, 0, telemetry);
+                        robot.driveAll(0, 0, 0, telemetry);
+                        telemetry.addData("Case -1", "Else");
+                        telemetry.update();
                     }
                     telemetry.update();
                     break;

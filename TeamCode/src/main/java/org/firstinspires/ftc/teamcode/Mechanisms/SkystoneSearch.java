@@ -17,7 +17,6 @@ import org.firstinspires.ftc.teamcode.Mechanisms.Robot;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.XMLFormatter;
 
 import static org.firstinspires.ftc.robotcore.external.navigation.AngleUnit.DEGREES;
 import static org.firstinspires.ftc.robotcore.external.navigation.AxesOrder.XYZ;
@@ -99,8 +98,7 @@ public class SkystoneSearch {
 ////        }
 //        }
 //        while (!isStopRequested())
-
-        public boolean vision(HardwareMap hardwareMap, Telemetry telemetry) {
+        public void init(HardwareMap hardwareMap) {
             lifecam = hardwareMap.get(WebcamName.class, "Webcam 1");
 
             /*
@@ -288,22 +286,38 @@ public class SkystoneSearch {
 
             targetsSkyStone.activate();
 
-                // check all the trackable targets to see which one (if any) is visible.
-                targetVisible = false;
-                for (VuforiaTrackable trackable : allTrackables) {
-                    if (((VuforiaTrackableDefaultListener)trackable.getListener()).isVisible()) {
-                        telemetry.addData("Visible Target", trackable.getName());
-                        targetVisible = true;
+        }
+        public boolean vision(Telemetry telemetry) {
 
-                        // getUpdatedRobotLocation() will return null if no new information is available since
-                        // the last time that call was made, or if the trackable is not currently visible.
-                        OpenGLMatrix robotLocationTransform = ((VuforiaTrackableDefaultListener)trackable.getListener()).getUpdatedRobotLocation();
-                        if (robotLocationTransform != null) {
-                            lastLocation = robotLocationTransform;
-                        }
-                        break;
+                // check all the trackable targets to see which one (if any) is visible.
+            targetVisible = false;
+            VuforiaTrackables targetsSkyStone = this.vuforia.loadTrackablesFromAsset("Skystone");
+
+            VuforiaTrackable stoneTarget = targetsSkyStone.get(0);
+            stoneTarget.setName("Stone Target");
+
+
+            // For convenience, gather together all the trackable objects in one easily-iterable collection */
+            List<VuforiaTrackable> allTrackables = new ArrayList<VuforiaTrackable>();
+            allTrackables.addAll(targetsSkyStone);
+
+            targetVisible = false;
+            for (VuforiaTrackable trackable : allTrackables) {
+                telemetry.addData("Help", "1");
+                if (((VuforiaTrackableDefaultListener)trackable.getListener()).isVisible()) {
+                    telemetry.addData("Visible Target", trackable.getName());
+                    telemetry.addData("Help2", "2");
+                    targetVisible = true;
+
+                    // getUpdatedRobotLocation() will return null if no new information is available since
+                    // the last time that call was made, or if the trackable is not currently visible.
+                    OpenGLMatrix robotLocationTransform = ((VuforiaTrackableDefaultListener)trackable.getListener()).getUpdatedRobotLocation();
+                    if (robotLocationTransform != null) {
+                        lastLocation = robotLocationTransform;
                     }
+                    break;
                 }
+            }
 
                 // Provide feedback as to where the robot is located (if we know).
                 if (targetVisible) {
@@ -315,6 +329,10 @@ public class SkystoneSearch {
                     // express the rotation of the robot in degrees.
                     Orientation rotation = Orientation.getOrientation(lastLocation, EXTRINSIC, XYZ, DEGREES);
                     telemetry.addData("Rot (deg)", "{Roll, Pitch, Heading} = %.0f, %.0f, %.0f", rotation.firstAngle, rotation.secondAngle, rotation.thirdAngle);
+                    X = translation.get(0) / mmPerInch;
+                    Y = translation.get(1) / mmPerInch;
+                    Z = translation.get(2) / mmPerInch;
+
                     telemetry.update();
                     return true;
                 } else {
