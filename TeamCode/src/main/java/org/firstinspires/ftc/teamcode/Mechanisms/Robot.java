@@ -10,21 +10,22 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 import static org.firstinspires.ftc.teamcode.Util.Constants.*;
 
-public class Robot {                                     //Initialize subsystems below, otherwise shit hits the fan
+public class Robot { //Initialize subsystems below, otherwise shit hits the fan
     private DriveTrain driveTrain = new DriveTrain();
     private Rotator rotator = new Rotator();
+    private PhoneCamera phone = new PhoneCamera();
     private Claw claw = new Claw();
     private FoundationClaw foundationClaw = new FoundationClaw();
     private LightSensor colorSensor = new LightSensor();
     private DistanceSensors distanceSensors = new DistanceSensors();
-
     private Context appContext;
 
     private double lastHeading = 0;
 
     public void init(HardwareMap hwMap) {
+        //phone.init(hwMap);
+   //     camera.init(hwMap);
         driveTrain.init(hwMap);
-
         foundationClaw.init(hwMap);
         claw.init(hwMap);
         rotator.init(hwMap);
@@ -38,7 +39,7 @@ public class Robot {                                     //Initialize subsystems
         telemetry.addData("Speeds", speed);
     }
 
-    public void drifeForwardStraight (double speed) {
+    public void driveForwardStraight (double speed) {
         driveForwardAndRotate(speed, getHeadingChange()/ ROTATE_HEADING_CHANGE_THRESHOLD);
     }
 
@@ -86,6 +87,10 @@ public class Robot {                                     //Initialize subsystems
         rotator.setToPostion(target);
     }
 
+    public double rotatorEncoder() {
+        return rotator.getEncoder();
+    }
+
     public boolean checkYellow() {
         if ((colorSensor.checkRed() + colorSensor.checkGreen()) > colorSensor.checkBlue()*2) { //colorSensor.checkRed() > YELLOW_RED_THRESHOLD && colorSensor.checkGreen() > YELLOW_GREEN_THRESHOLD && colorSensor.checkBlue() < YELLOW_BLUE_THRESHOLD
             return true;
@@ -118,11 +123,9 @@ public class Robot {                                     //Initialize subsystems
         return colorSensor.checkProximity() * 2;
     }
 
-    public double checkLeftDistance() {
-        return distanceSensors.checkLeftDistance();
-    }
-
+    public double checkLeftDistance() { return distanceSensors.checkLeftDistance(); }
     public double checkRightDistance() { return distanceSensors.checkRightDistance(); }
+    public double checkBackDistance() { return distanceSensors.checkBackDistance(); }
 
     //public double robotOrientation(){ return driveTrain.getHeading(); }
 
@@ -142,6 +145,7 @@ public class Robot {                                     //Initialize subsystems
         colorSensor.reportProximity(telemetry);
         distanceSensors.reportDistances(telemetry);
         rotator.reportEncoders(telemetry);
+        foundationClaw.reportEncoders(telemetry);
         //driveTrain.reportHeading(telemetry);
     }
 }

@@ -14,9 +14,22 @@ public class DriveAll extends OpMode {
     private ElapsedTime runtime = new ElapsedTime();
 
     private Robot robot = new Robot();
-    private int targetRotatorPosition = 0;
+
+    private double targetRotatorPosition = ROTATOR_HIGH_THRESHOLD;
     private boolean clawOpen = false;
     private boolean foundationClawOpen = true;
+
+    private boolean aPressed = false;
+    private boolean bPressed = false;
+    private boolean xPressed = false;
+    private boolean yPressed = false;
+
+    private boolean leftPressed = false;
+    private boolean rightPressed = false;
+
+    boolean triggerThresholdReached = false;
+
+
     // Code to run when the driver hits INIT
     @Override
     public void init() {
@@ -46,15 +59,6 @@ public class DriveAll extends OpMode {
         telemetry.addData("Left Y", forwardInput);
         telemetry.addData("Right X", rotateInput);
         telemetry.addData("Right Y", armInput);
-        boolean aPressed = false;
-        boolean bPressed = false;
-        boolean xPressed = false;
-        boolean yPressed = false;
-
-        boolean leftPressed = false;
-        boolean rightPressed = false;
-
-
 
 //        if (Math.abs(forwardInput) > Math.abs(strafeInput)) {
 //            robot.driveForwardAndRotate(forwardInput, rotateInput);
@@ -92,12 +96,12 @@ public class DriveAll extends OpMode {
 
         robot.setRotatorPosition(targetRotatorPosition);
 
-        if (gamepad1.right_trigger > RIGHT_TRIGGER_THRESHOLD && !yPressed) {//Set claw state to Y button state and check for infinite toggle loops
+        if (gamepad1.right_trigger > RIGHT_TRIGGER_THRESHOLD && !triggerThresholdReached) {//Set claw state to Y button state and check for infinite toggle loops
             clawOpen = !clawOpen;
-            yPressed = true;
+            triggerThresholdReached = true;
         }
-        if (yPressed == false){
-            yPressed = false;
+        if (gamepad1.right_trigger < RIGHT_TRIGGER_THRESHOLD){
+            triggerThresholdReached = false;
         }
 
         if (clawOpen == true) {
@@ -110,7 +114,7 @@ public class DriveAll extends OpMode {
             foundationClawOpen = !foundationClawOpen;
             aPressed = true;
         }
-        if (aPressed == false){
+        if (gamepad1.a == false){
             aPressed = false;
         }
 
