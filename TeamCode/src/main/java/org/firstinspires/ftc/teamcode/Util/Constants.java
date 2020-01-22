@@ -119,7 +119,7 @@ public class Constants {
     public static double NO_TARGET = -2000;
 
     public static final double SKYSTONE_X_LOCATION = 0.0;
-    public static final double SKYSTONE_Y_LOCATION_UPPER = 3.6;
-    public static final double SKYSTONE_Y_LOCATION_LOWER = 1.0;
+    public static final double SKYSTONE_Y_LOCATION_UPPER = 3.2;
+    public static final double SKYSTONE_Y_LOCATION_LOWER = 0.6;
     public static final double SKYSTONE_Z_LOCATION = 0.0;
 }
