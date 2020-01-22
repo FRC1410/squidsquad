@@ -83,7 +83,7 @@ public class Constants {
     public static final double AUTO_FAST_SPEED_LEFT = -0.8;
     public static final double AUTO_FAST_SPEED_RIGHT = 0.8;
     public static final double AUTO_SLOW_SPEED_FORWARD = -0.4;
-    public static final double AUTO_SLOW_SPEED_LEFT = -0.2;
+    public static final double AUTO_SLOW_SPEED_LEFT = -0.4;
     public static final double AUTO_SLOW_SPEED_RIGHT = 0.2;
     public static final double AUTO_STOP = 0.0;
     public static final double AUTO_FAST_SPEED_BACKWARD = 0.5;
@@ -92,6 +92,8 @@ public class Constants {
     public static final double AUTO_ROTATE_LEFT = -0.3;
     public static final double AUTO_STRAFE_RIGHT = 0.6;
     public static final double AUTO_STRAFE_LEFT = -0.6;
+    public static final double AUTO_LOCATOR_LEFT = -0.175;
+    public static final double AUTO_LOCATOR_RIGHT = 0.175;
 
     public static final double SKYSTONE_FAR_DISTANCE_THRESHOLD = 70;
     public static final double SKYSTONE_CLOSE_DISTANCE_THRESHOLD = 73.66;
@@ -117,7 +119,7 @@ public class Constants {
     public static double NO_TARGET = -2000;
 
     public static final double SKYSTONE_X_LOCATION = 0.0;
-    public static final double SKYSTONE_Y_LOCATION_UPPER = 5.0;
-    public static final double SKYSTONE_Y_LOCATION_LOWER = 2.4;
+    public static final double SKYSTONE_Y_LOCATION_UPPER = 3.6;
+    public static final double SKYSTONE_Y_LOCATION_LOWER = 1.0;
     public static final double SKYSTONE_Z_LOCATION = 0.0;
 }

@@ -330,6 +330,7 @@ public class LinearSkystoneSearch extends LinearOpMode {
                 telemetry.addData("X", X);
                 telemetry.addData("Y", Y);
                 telemetry.addData("Z", Z);
+                telemetry.addData("Back Distance", robot.checkBackDistance());
 
 
                 switch (step) {
@@ -361,18 +362,18 @@ public class LinearSkystoneSearch extends LinearOpMode {
                     case 2: //$#
                         telemetry.addData("Auto Step", "2");
                         if (Y < SKYSTONE_Y_LOCATION_LOWER) {
-                            robot.driveAll(0, -AUTO_SLOW_SPEED_LEFT, 0, telemetry);
+                            robot.driveAll(0, -AUTO_LOCATOR_LEFT, 0, telemetry);
                         } else if (Y > SKYSTONE_Y_LOCATION_UPPER) {
-                            robot.driveAll(0, -AUTO_SLOW_SPEED_RIGHT, 0, telemetry);
+                            robot.driveAll(0, -AUTO_LOCATOR_RIGHT, 0, telemetry);
                         } else {
                             robot.driveAll(0,0,0, telemetry);
                             step = 3;
                         }
                         telemetry.update();
                         break;
-                    case 3: //$
+                    case 3: //$#
                         telemetry.addData("Auto Step", "3");
-                        if (robot.checkBackDistance() < SKYSTONE_FAR_DISTANCE_THRESHOLD) {
+                        if (robot.checkBackDistance() > SKYSTONE_FAR_DISTANCE_THRESHOLD) {
                             robot.driveAll(AUTO_FAST_SPEED_FORWARD, 0, 0, telemetry);
                         } else {
                             robot.driveAll(0, 0, 0, telemetry);
@@ -380,9 +381,9 @@ public class LinearSkystoneSearch extends LinearOpMode {
                         }
                         telemetry.update();
                         break;
-                    case 4: //$
+                    case 4: //$#
                         telemetry.addData("Auto Step", "4");
-                        if (robot.checkBackDistance() < SKYSTONE_CLOSE_DISTANCE_THRESHOLD) {
+                        if (robot.checkBackDistance() > SKYSTONE_CLOSE_DISTANCE_THRESHOLD) {
                             robot.driveAll(AUTO_SLOW_SPEED_FORWARD, 0, 0, telemetry);
                         } else {
                             robot.driveAll(0, 0, 0, telemetry);
@@ -390,27 +391,30 @@ public class LinearSkystoneSearch extends LinearOpMode {
                         }
                         telemetry.update();
                         break;
-                    case 5: //$
+                    case 5: //$#
                         telemetry.addData("Auto Step", "5");
                         robot.closeClaw();
+                        robot.waiting(200);
                         firstSkystoneDistance = robot.checkLeftDistance();
                         step = 6;
                         telemetry.update();
                         break;
-                    case 6: //$
+                    case 6: //$#
                         telemetry.addData("Auto Step", "6");
                         robot.driveAll(AUTO_FAST_SPEED_BACKWARD,0,0, telemetry);
-                        robot.waiting(400);
+                        robot.waiting(800);
                         robot.driveAll(0, 0, 0, telemetry);
                         step = 7;
                         telemetry.update();
                         break;
                     case 7: //$
                         telemetry.addData("Auto Step", "7");
-                        if (robot.checkRightDistance() <= 800) {
+                        if (robot.checkLeftDistance() > 800) {
+                            robot.driveAll(0,-AUTO_FAST_SPEED_RIGHT,0, telemetry);
+                            robot.waiting(600);
                             robot.driveAll(0, 0, 0, telemetry);
                             robot.openClaw();
-                            step = 8;
+                            step = 1410;
                         } else {
                             robot.driveAll(0,-AUTO_FAST_SPEED_RIGHT,0, telemetry);
                         }
@@ -440,6 +444,11 @@ public class LinearSkystoneSearch extends LinearOpMode {
                             telemetry.addData("Auto Step", "Finished");
                             telemetry.update();
                         }
+                        telemetry.update();
+                        break;
+                    case 1410:
+                        telemetry.addData("Auto Step", "1410");
+                        robot.driveAll(0,0,0, telemetry);
                         telemetry.update();
                         break;
                 }
