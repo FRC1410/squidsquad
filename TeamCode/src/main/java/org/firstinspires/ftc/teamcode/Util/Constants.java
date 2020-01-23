@@ -107,6 +107,7 @@ public class Constants {
     public static final double FAR_DISTANCE_THRESHOLD = 126;
     public static final double CLOSE_DISTANCE_THRESHOLD = 70;
     public static final double SKYSTONE_OFFSET = 50; //"Do this and git gud" - Santi
+    public static final double SKYSTONE_DISTANCE_OFFSET = 15.0;
 
     //Camera Constants
     public static final float camXRotate = 0;
@@ -119,7 +120,7 @@ public class Constants {
     public static double NO_TARGET = -2000;
 
     public static final double SKYSTONE_X_LOCATION = 0.0;
-    public static final double SKYSTONE_Y_LOCATION_UPPER = 3.2;
-    public static final double SKYSTONE_Y_LOCATION_LOWER = 0.6;
+    public static final double SKYSTONE_Y_LOCATION_UPPER = 2.6;
+    public static final double SKYSTONE_Y_LOCATION_LOWER = 0.0;
     public static final double SKYSTONE_Z_LOCATION = 0.0;
 }

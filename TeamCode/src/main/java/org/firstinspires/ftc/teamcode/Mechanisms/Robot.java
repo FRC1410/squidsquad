@@ -60,7 +60,15 @@ public class Robot { //Initialize subsystems below, otherwise shit hits the fan
     public void driveStrafe(double speed) {
         driveTrain.setSpeeds(-speed, speed, -speed, speed);        //Positive strafe value makes the robot strafe right
     }
+    public void driveStrafeAndRotate (double sSpeed, double rSpeed) {
+        if (rSpeed > 0) {
+            driveTrain.setSpeeds(sSpeed, sSpeed, -sSpeed*(1 - rSpeed), -sSpeed*(1 - rSpeed)  );
+        } else if (rSpeed < 0) {
+//            driveTrain.setSpeeds(sSpeed*(1 - rSpeed)  ); driveTrain.setSpeeds
+        } else {
 
+        }
+    }
     public void driveStrafeStraight(double speed) {
 
     }
