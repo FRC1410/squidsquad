@@ -10,27 +10,30 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 import static org.firstinspires.ftc.teamcode.Util.Constants.*;
 
-public class Robot {                                     //Initialize subsystems below, otherwise shit hits the fan
+public class Robot { //Initialize subsystems below, otherwise shit hits the fan
     private DriveTrain driveTrain = new DriveTrain();
     private Rotator rotator = new Rotator();
+    private PhoneCamera phone = new PhoneCamera();
     private Claw claw = new Claw();
     private FoundationClaw foundationClaw = new FoundationClaw();
     private LightSensor colorSensor = new LightSensor();
     private DistanceSensors distanceSensors = new DistanceSensors();
-
     private Context appContext;
 
-    private double lastHeading = 0;
+    private double startHeading;
 
     public void init(HardwareMap hwMap) {
+        //phone.init(hwMap);
+   //     camera.init(hwMap);
         driveTrain.init(hwMap);
-
         foundationClaw.init(hwMap);
         claw.init(hwMap);
         rotator.init(hwMap);
         colorSensor.init(hwMap);
         distanceSensors.init(hwMap);
         appContext = hwMap.appContext;
+
+        startHeading = driveTrain.getHeading();
     }
 
     public void driveForward(double speed, Telemetry telemetry) {       //Positive speed value runs the robot forward
@@ -38,8 +41,8 @@ public class Robot {                                     //Initialize subsystems
         telemetry.addData("Speeds", speed);
     }
 
-    public void drifeForwardStraight (double speed) {
-        driveForwardAndRotate(speed, getHeadingChange()/ ROTATE_HEADING_CHANGE_THRESHOLD);
+    public void driveForwardStraight (double speed) {
+        driveForwardAndRotate(speed, (driveTrain.getHeading() - startHeading)/HEADING_THRESHOLD);
     }
 
     public void driveRotate(double speed) {                     //Positive rotate value makes the robot rotate clockwise
@@ -57,11 +60,21 @@ public class Robot {                                     //Initialize subsystems
     }
 
     public void driveStrafe(double speed) {
-        driveTrain.setSpeeds(-speed, speed, -speed, speed);        //Positive strafe value makes the robot strafe right
+        driveTrain.setSpeeds(speed, speed, -speed, -speed);        //Positive strafe value makes the robot strafe right
     }
-
+    public void driveStrafeAndRotate (double sSpeed, double rSpeed) {
+        if (rSpeed > 0) {
+           // driveTrain.setSpeeds(sSpeed, sSpeed, -sSpeed*(1 - rSpeed), -sSpeed*(1 - rSpeed));
+            driveTrain.setSpeeds(sSpeed, sSpeed*(1 - rSpeed), -sSpeed*(1 - rSpeed), -sSpeed);
+        } else if (rSpeed < 0) {
+            //driveTrain.setSpeeds(sSpeed*(1 - rSpeed), sSpeed*(1 - rSpeed), -sSpeed, -sSpeed);
+            driveTrain.setSpeeds(sSpeed*(1 - rSpeed), sSpeed, -sSpeed, -sSpeed*(1 - rSpeed));
+        } else {
+            driveStrafe(sSpeed);
+        }
+    }
     public void driveStrafeStraight(double speed) {
-
+        driveStrafeAndRotate(speed, (driveTrain.getHeading() - startHeading)/HEADING_THRESHOLD);
     }
 
     public void driveAll(double fSpeed, double sSpeed, double rSpeed, Telemetry telemetry) {
@@ -74,16 +87,12 @@ public class Robot {                                     //Initialize subsystems
         return driveTrain.getHeading() + HEADING_OFFSET;
     }
 
-    public void setLastHeading() {
-        lastHeading = driveTrain.getHeading();
-    }
-
-    public double getHeadingChange() {
-        return driveTrain.getHeading() - lastHeading;                   //If heading change is positive, robot has rotated clockwise, and vice versa.
-    }
-
     public void setRotatorPosition(double target) {
         rotator.setToPostion(target);
+    }
+
+    public double rotatorEncoder() {
+        return rotator.getEncoder();
     }
 
     public boolean checkYellow() {
@@ -118,11 +127,9 @@ public class Robot {                                     //Initialize subsystems
         return colorSensor.checkProximity() * 2;
     }
 
-    public double checkLeftDistance() {
-        return distanceSensors.checkLeftDistance();
-    }
-
+    public double checkLeftDistance() { return distanceSensors.checkLeftDistance(); }
     public double checkRightDistance() { return distanceSensors.checkRightDistance(); }
+    public double checkBackDistance() { return distanceSensors.checkBackDistance(); }
 
     //public double robotOrientation(){ return driveTrain.getHeading(); }
 
@@ -142,6 +149,7 @@ public class Robot {                                     //Initialize subsystems
         colorSensor.reportProximity(telemetry);
         distanceSensors.reportDistances(telemetry);
         rotator.reportEncoders(telemetry);
+        foundationClaw.reportEncoders(telemetry);
         //driveTrain.reportHeading(telemetry);
     }
 }
