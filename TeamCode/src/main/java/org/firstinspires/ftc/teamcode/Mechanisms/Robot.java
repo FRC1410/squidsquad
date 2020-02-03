@@ -18,13 +18,13 @@ public class Robot { //Initialize subsystems below, otherwise shit hits the fan
     private FoundationClaw foundationClaw = new FoundationClaw();
     private LightSensor colorSensor = new LightSensor();
     private DistanceSensors distanceSensors = new DistanceSensors();
+    private TapeMeasure tapeMeasure = new TapeMeasure();
     private Context appContext;
 
     private double startHeading;
 
     public void init(HardwareMap hwMap) {
-        //phone.init(hwMap);
-   //     camera.init(hwMap);
+        tapeMeasure.init(hwMap);
         driveTrain.init(hwMap);
         foundationClaw.init(hwMap);
         claw.init(hwMap);
@@ -39,6 +39,11 @@ public class Robot { //Initialize subsystems below, otherwise shit hits the fan
     public void driveForward(double speed, Telemetry telemetry) {       //Positive speed value runs the robot forward
         driveTrain.setSpeeds(speed, speed, speed, speed);
         telemetry.addData("Speeds", speed);
+    }
+
+    public void tapeMeasure(double speed, Telemetry telemetry) {
+        tapeMeasure.setSpeed(speed);
+        telemetry.addData("Tape Speed", speed);
     }
 
     public void driveForwardStraight (double speed) {

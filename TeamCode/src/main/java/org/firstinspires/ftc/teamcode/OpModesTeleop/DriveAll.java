@@ -18,6 +18,7 @@ public class DriveAll extends OpMode {
     private double targetRotatorPosition = ROTATOR_LOW_THRESHOLD;
     private boolean clawOpen = false;
     private boolean foundationClawOpen = true;
+    private boolean tapeIsOut = true;
 
     private boolean aPressed = false;
     private boolean bPressed = false;
@@ -122,6 +123,24 @@ public class DriveAll extends OpMode {
             robot.openFoundationClaw();
         } else {
             robot.closeFoundationClaw();
+        }
+
+        if (gamepad1.y && !yPressed) {//Set claw state to Y button state and check for infinite toggle loops
+            tapeIsOut = !tapeIsOut;
+            yPressed = true;
+        }
+        if (gamepad1.y == false){
+            yPressed = false;
+        }
+
+        if (tapeIsOut == true) {
+            robot.tapeMeasure(0.5, telemetry);
+            robot.waiting(100);
+            robot.tapeMeasure(0, telemetry);
+        } else {
+            robot.tapeMeasure(-0.5, telemetry);
+            robot.waiting(100);
+            robot.tapeMeasure(0, telemetry);
         }
 
 //        if (gamepad1.y && !yPressed) {//Set claw state to Y button state and check for infinite toggle loops
