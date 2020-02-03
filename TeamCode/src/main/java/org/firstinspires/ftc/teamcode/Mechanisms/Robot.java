@@ -20,7 +20,7 @@ public class Robot { //Initialize subsystems below, otherwise shit hits the fan
     private DistanceSensors distanceSensors = new DistanceSensors();
     private Context appContext;
 
-    private double lastHeading = 0;
+    private double startHeading;
 
     public void init(HardwareMap hwMap) {
         //phone.init(hwMap);
@@ -32,6 +32,8 @@ public class Robot { //Initialize subsystems below, otherwise shit hits the fan
         colorSensor.init(hwMap);
         distanceSensors.init(hwMap);
         appContext = hwMap.appContext;
+
+        startHeading = driveTrain.getHeading();
     }
 
     public void driveForward(double speed, Telemetry telemetry) {       //Positive speed value runs the robot forward
@@ -40,7 +42,7 @@ public class Robot { //Initialize subsystems below, otherwise shit hits the fan
     }
 
     public void driveForwardStraight (double speed) {
-        driveForwardAndRotate(speed, getHeadingChange()/ ROTATE_HEADING_CHANGE_THRESHOLD);
+        driveForwardAndRotate(speed, (driveTrain.getHeading() - startHeading)/HEADING_THRESHOLD);
     }
 
     public void driveRotate(double speed) {                     //Positive rotate value makes the robot rotate clockwise
@@ -58,19 +60,21 @@ public class Robot { //Initialize subsystems below, otherwise shit hits the fan
     }
 
     public void driveStrafe(double speed) {
-        driveTrain.setSpeeds(-speed, speed, -speed, speed);        //Positive strafe value makes the robot strafe right
+        driveTrain.setSpeeds(speed, speed, -speed, -speed);        //Positive strafe value makes the robot strafe right
     }
     public void driveStrafeAndRotate (double sSpeed, double rSpeed) {
         if (rSpeed > 0) {
-            driveTrain.setSpeeds(sSpeed, sSpeed, -sSpeed*(1 - rSpeed), -sSpeed*(1 - rSpeed)  );
+           // driveTrain.setSpeeds(sSpeed, sSpeed, -sSpeed*(1 - rSpeed), -sSpeed*(1 - rSpeed));
+            driveTrain.setSpeeds(sSpeed, sSpeed*(1 - rSpeed), -sSpeed*(1 - rSpeed), -sSpeed);
         } else if (rSpeed < 0) {
-//            driveTrain.setSpeeds(sSpeed*(1 - rSpeed)  ); driveTrain.setSpeeds
+            //driveTrain.setSpeeds(sSpeed*(1 - rSpeed), sSpeed*(1 - rSpeed), -sSpeed, -sSpeed);
+            driveTrain.setSpeeds(sSpeed*(1 - rSpeed), sSpeed, -sSpeed, -sSpeed*(1 - rSpeed));
         } else {
-
+            driveStrafe(sSpeed);
         }
     }
     public void driveStrafeStraight(double speed) {
-
+        driveStrafeAndRotate(speed, (driveTrain.getHeading() - startHeading)/HEADING_THRESHOLD);
     }
 
     public void driveAll(double fSpeed, double sSpeed, double rSpeed, Telemetry telemetry) {
@@ -81,14 +85,6 @@ public class Robot { //Initialize subsystems below, otherwise shit hits the fan
     public double getHeadingAbsolute(Telemetry telemetry) {
         telemetry.addData("IMU Heading Absolute", driveTrain.getHeading() + HEADING_OFFSET);
         return driveTrain.getHeading() + HEADING_OFFSET;
-    }
-
-    public void setLastHeading() {
-        lastHeading = driveTrain.getHeading();
-    }
-
-    public double getHeadingChange() {
-        return driveTrain.getHeading() - lastHeading;                   //If heading change is positive, robot has rotated clockwise, and vice versa.
     }
 
     public void setRotatorPosition(double target) {

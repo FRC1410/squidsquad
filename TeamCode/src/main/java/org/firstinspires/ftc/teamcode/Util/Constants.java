@@ -63,7 +63,7 @@ public class Constants {
 
     //IMU Constants
     public static final double HEADING_OFFSET = 0;
-    public static final double ROTATE_HEADING_CHANGE_THRESHOLD = 10;
+    public static final double HEADING_THRESHOLD = 10;
 
     //Color Sensor
     public static final double COLOR_SCALE_VALUE = 255;
@@ -84,7 +84,7 @@ public class Constants {
     public static final double AUTO_FAST_SPEED_RIGHT = 0.8;
     public static final double AUTO_SLOW_SPEED_FORWARD = -0.4;
     public static final double AUTO_SLOW_SPEED_LEFT = -0.4;
-    public static final double AUTO_SLOW_SPEED_RIGHT = 0.2;
+    public static final double AUTO_SLOW_SPEED_RIGHT = 0.4;
     public static final double AUTO_STOP = 0.0;
     public static final double AUTO_FAST_SPEED_BACKWARD = 0.5;
     public static final double AUTO_SLOW_SPEED_BACKWARD = 0.15;
@@ -120,7 +120,9 @@ public class Constants {
     public static double NO_TARGET = -2000;
 
     public static final double SKYSTONE_X_LOCATION = 0.0;
-    public static final double SKYSTONE_Y_LOCATION_UPPER = 2.6;
-    public static final double SKYSTONE_Y_LOCATION_LOWER = 0.0;
+    public static final double SKYSTONE_Y_LOCATION_UPPER_RED = 2.6;
+    public static final double SKYSTONE_Y_LOCATION_LOWER_RED = 0.0;
+    public static final double SKYSTONE_Y_LOCATION_UPPER_BLUE = 4.6;
+    public static final double SKYSTONE_Y_LOCATION_LOWER_BLUE = 2.0;
     public static final double SKYSTONE_Z_LOCATION = 0.0;
 }

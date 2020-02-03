@@ -25,7 +25,7 @@ import static org.firstinspires.ftc.robotcore.external.navigation.AxesReference.
 import static org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer.CameraDirection.BACK;
 
 
-@Autonomous
+//@Autonomous
 public class LinearSkystoneSearch extends LinearOpMode {
 
     // IMPORTANT: If you are using a USB WebCam, you must select CAMERA_CHOICE = BACK; and PHONE_IS_PORTRAIT = false;
@@ -100,7 +100,6 @@ public class LinearSkystoneSearch extends LinearOpMode {
 
         robot.openClaw();
         robot.setRotatorPosition(0);
-        robot.setLastHeading();
 
         /*
          * Configure Vuforia by creating a Parameter object, and passing it to the Vuforia engine.
@@ -333,6 +332,7 @@ public class LinearSkystoneSearch extends LinearOpMode {
                 telemetry.addData("Back Distance", robot.checkBackDistance());
                 telemetry.addData("First Skystone Distance", firstSkystoneDistance);
                 telemetry.addData("Grabbed Skystones", skystonesGrabbed);
+                robot.getHeadingAbsolute(telemetry);
 
 
                 switch (step) {
@@ -363,10 +363,12 @@ public class LinearSkystoneSearch extends LinearOpMode {
                         break;
                     case 2: //$#
                         telemetry.addData("Auto Step", "2");
-                        if (Y < SKYSTONE_Y_LOCATION_LOWER) {
-                            robot.driveAll(0, -AUTO_LOCATOR_LEFT, 0, telemetry);
-                        } else if (Y > SKYSTONE_Y_LOCATION_UPPER) {
-                            robot.driveAll(0, -AUTO_LOCATOR_RIGHT, 0, telemetry);
+                        if (Y < SKYSTONE_Y_LOCATION_LOWER_BLUE) {
+                            //robot.driveAll(0, -AUTO_LOCATOR_LEFT, 0, telemetry);
+                            robot.driveStrafeStraight(-AUTO_LOCATOR_LEFT);
+                        } else if (Y > SKYSTONE_Y_LOCATION_UPPER_BLUE) {
+                            //robot.driveAll(0, -AUTO_LOCATOR_RIGHT, 0, telemetry);
+                            robot.driveStrafeStraight(-AUTO_LOCATOR_RIGHT);
                         } else {
                             robot.driveAll(0,0,0, telemetry);
                             step = 3;

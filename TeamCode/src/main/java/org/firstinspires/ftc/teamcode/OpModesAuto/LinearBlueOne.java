@@ -27,7 +27,7 @@ import static org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocaliz
 
 
 @Autonomous
-public class LinearBlueSkystone extends LinearOpMode {
+public class LinearBlueOne extends LinearOpMode {
 
     // IMPORTANT: If you are using a USB WebCam, you must select CAMERA_CHOICE = BACK; and PHONE_IS_PORTRAIT = false;
     private static final VuforiaLocalizer.CameraDirection CAMERA_CHOICE = BACK;
@@ -80,7 +80,7 @@ public class LinearBlueSkystone extends LinearOpMode {
 
     private int step = 0;
     private double firstSkystoneDistance;
-    private int skystonesGrabbed = 0;
+    private int skystonesGrabbed = 1;
 
     private boolean targetVisible = false;
     private float phoneXRotate = 0;
@@ -287,7 +287,6 @@ public class LinearBlueSkystone extends LinearOpMode {
 
         while (opModeIsActive()) {
 
-
             // check all the trackable targets to see which one (if any) is visible.
             targetVisible = false;
             for (VuforiaTrackable trackable : allTrackables) {
@@ -354,30 +353,22 @@ public class LinearBlueSkystone extends LinearOpMode {
                         step = 2;
                         telemetry.update();
                     } else {
-                        if (skystonesGrabbed == 0) {
-                            robot.driveAll(0, -AUTO_SLOW_SPEED_RIGHT, 0, telemetry);
-                            robot.waiting(200);
-                            robot.driveAll(0, 0, 0, telemetry);
-                            robot.waiting(500);
-                            telemetry.update();
-                        } else {
-                            robot.driveAll(0, -AUTO_SLOW_SPEED_RIGHT, 0.01, telemetry);
-                            robot.waiting(200);
-                            robot.driveAll(0, 0, 0, telemetry);
-                            robot.waiting(500);
-                            telemetry.update();
-                        }
+                        robot.driveAll(0, -AUTO_SLOW_SPEED_RIGHT, 0.03, telemetry);
+                        robot.waiting(200);
+                        robot.driveAll(0, 0, 0, telemetry);
+                        robot.waiting(500);
+                        telemetry.update();
                     }
                     telemetry.update();
                     break;
                 case 2: //$#
                     telemetry.addData("Auto Step", "2");
                     if (Y < SKYSTONE_Y_LOCATION_LOWER_BLUE) {
-                        robot.driveAll(0,-AUTO_LOCATOR_LEFT,0, telemetry);
+                        robot.driveAll(0,-AUTO_LOCATOR_LEFT,-0.03, telemetry);
                         // robot.driveAll(0, -AUTO_LOCATOR_LEFT, 0, telemetry);
                     } else if (Y > SKYSTONE_Y_LOCATION_UPPER_BLUE) {
                         //        robot.driveAll(0, -AUTO_LOCATOR_RIGHT, 0, telemetry);
-                        robot.driveAll(0,-AUTO_LOCATOR_RIGHT,0, telemetry);
+                        robot.driveAll(0,-AUTO_LOCATOR_RIGHT,0.03, telemetry);
                     } else {
                         robot.driveAll(0,0,0, telemetry);
                         step = 3;
@@ -387,23 +378,20 @@ public class LinearBlueSkystone extends LinearOpMode {
                 case 3: //$#
                     telemetry.addData("Auto Step", "3");
                     //if (robot.checkBackDistance() < SKYSTONE_FAR_DISTANCE_THRESHOLD) {
-
                     robot.driveAll(AUTO_FAST_SPEED_FORWARD, 0, 0, telemetry);
                     //} else {
-                    robot.waiting(750);
+                    robot.waiting(690);
                     robot.driveAll(0, 0, 0, telemetry);
-                    step = 5;
+                    step = 4;
                     //}
                     telemetry.update();
                     break;
                 case 4: //$#
                     telemetry.addData("Auto Step", "4");
-                    if (robot.checkBackDistance() < SKYSTONE_CLOSE_DISTANCE_THRESHOLD) {
-                        robot.driveAll(AUTO_SLOW_SPEED_FORWARD, 0, 0, telemetry);
-                    } else {
-                        robot.driveAll(0, 0, 0, telemetry);
-                        step = 5;
-                    }
+                    robot.driveAll(AUTO_SLOW_SPEED_FORWARD, 0, 0, telemetry);
+                    robot.waiting(50);
+                    robot.driveAll(0, 0, 0, telemetry);
+                    step = 5;
                     telemetry.update();
                     break;
                 case 5: //$#
@@ -417,10 +405,10 @@ public class LinearBlueSkystone extends LinearOpMode {
                     telemetry.update();
                     break;
                 case 6: //$#
-                    telemetry.addData("Auto Step", "6");
+                    telemetry.addData("Auto S2tep", "6");
                     robot.driveAll(AUTO_FAST_SPEED_BACKWARD,0,0, telemetry);
                     if (skystonesGrabbed == 0) {
-                        robot.waiting(900);
+                        robot.waiting(800);
                     } else {
                         robot.waiting(1000);
                     }
@@ -431,13 +419,12 @@ public class LinearBlueSkystone extends LinearOpMode {
                 case 7: //$@#
                     telemetry.addData("Auto Step", "7");
                     if (robot.checkRightDistance() > 800) {
-                        robot.driveAll(0,-AUTO_FAST_SPEED_LEFT,0, telemetry);
+                        robot.driveAll(0,-AUTO_FAST_SPEED_LEFT,-0.05, telemetry);
                         robot.waiting(800);
                         robot.driveAll(0, 0, 0, telemetry);
                         robot.setRotatorPosition(0);
                         robot.openClaw();
-                        skystonesGrabbed++;
-                        if (skystonesGrabbed == 1) {
+                        skystonesGrabbed++;                        if (skystonesGrabbed == 1) {
                             step = 8; //This is case 1
                         } else {
                             step = 9; //This is case 9
@@ -451,12 +438,10 @@ public class LinearBlueSkystone extends LinearOpMode {
                 case 8: //$
                     telemetry.addData("Auto Step", "8");
 //                        if (robot.checkLeftDistance() > firstSkystoneDistance + SKYSTONE_DISTANCE_OFFSET) {
-                    if (robot.checkRightDistance() > 100) {
+                    if (robot.checkRightDistance() > 90) {
                         robot.driveAll(0, -AUTO_FAST_SPEED_RIGHT, 0, telemetry);
                     } else {
                         robot.driveAll(0, 0, 0, telemetry);
-                        robot.driveAll(AUTO_SLOW_SPEED_FORWARD,0,0, telemetry);
-                        robot.waiting(20);
 //                            skystonesGrabbed++;
 //                            if (skystonesGrabbed <= 2) {
 //                                step = 1; //This is case 1
@@ -470,7 +455,7 @@ public class LinearBlueSkystone extends LinearOpMode {
                 case 9: //$#
                     telemetry.addData("Auto Step", "9");
                     robot.driveAll(0,-AUTO_FAST_SPEED_RIGHT,0, telemetry);
-                    robot.waiting(700);
+                    robot.waiting(800);
                     robot.driveAll(0, 0, 0, telemetry);
                     telemetry.addData("Auto Step", "Finished");
                     telemetry.update();
