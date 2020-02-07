@@ -27,9 +27,12 @@ public class LinearForwardScoot extends LinearOpMode {
             /* <Main Stage> */
             switch (step) {
                 case 1:
-                    robot.driveAll(AUTO_FAST_SPEED_FORWARD, 0, 0, telemetry);
-                    robot.waiting(400);
-                    robot.driveAll(0, 0, 0, telemetry);
+//                    robot.driveAll(AUTO_FAST_SPEED_FORWARD, 0, 0, telemetry);
+//                    robot.waiting(400);
+//                    robot.driveAll(0, 0, 0, telemetry);
+                    robot.runTapeMeasure(0.7, telemetry);
+                    robot.waiting(5700);
+                    robot.runTapeMeasure(0, telemetry);
                     step = 2;
                     break;
                 case 2:

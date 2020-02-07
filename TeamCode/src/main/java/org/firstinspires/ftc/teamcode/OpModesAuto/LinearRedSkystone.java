@@ -419,11 +419,7 @@ public class LinearRedSkystone extends LinearOpMode {
                 case 6: //$#
                     telemetry.addData("Auto Step", "6");
                     robot.driveAll(AUTO_FAST_SPEED_BACKWARD,0,0, telemetry);
-                    if (skystonesGrabbed == 0) {
-                        robot.waiting(800);
-                    } else {
-                        robot.waiting(1000);
-                    }
+                    robot.waiting(1000);
                     robot.driveAll(0, 0, 0, telemetry);
                     step = 7;
                     telemetry.update();
@@ -470,7 +466,7 @@ public class LinearRedSkystone extends LinearOpMode {
                 case 9: //$#
                     telemetry.addData("Auto Step", "9");
                     robot.driveAll(0,-AUTO_FAST_SPEED_LEFT,0, telemetry);
-                    robot.waiting(700);
+                    robot.waiting(800);
                     robot.driveAll(0, 0, 0, telemetry);
                     telemetry.addData("Auto Step", "Finished");
                     telemetry.update();

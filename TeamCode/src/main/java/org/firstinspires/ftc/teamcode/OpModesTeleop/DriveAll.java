@@ -18,7 +18,10 @@ public class DriveAll extends OpMode {
     private double targetRotatorPosition = ROTATOR_LOW_THRESHOLD;
     private boolean clawOpen = false;
     private boolean foundationClawOpen = true;
-    private boolean tapeIsOut = true;
+    private boolean tapeIsOutY = false;
+    private boolean tapeIsOutX = false;
+    private boolean bushDidIt = false;
+    private boolean release = false;
 
     private boolean aPressed = false;
     private boolean bPressed = false;
@@ -125,22 +128,50 @@ public class DriveAll extends OpMode {
             robot.closeFoundationClaw();
         }
 
+        if (gamepad1.b && !bPressed) {//Bush did it!
+            bushDidIt = !bushDidIt;
+            bPressed = true;
+        }
+        if (gamepad1.b == false){
+            bPressed = false;
+        }
+
+        if (bushDidIt == true) {
+            telemetry.speak("Bush Did It");
+        }
+
         if (gamepad1.y && !yPressed) {//Set claw state to Y button state and check for infinite toggle loops
-            tapeIsOut = !tapeIsOut;
+            tapeIsOutY = !tapeIsOutY;
             yPressed = true;
         }
         if (gamepad1.y == false){
             yPressed = false;
         }
 
-        if (tapeIsOut == true) {
-            robot.tapeMeasure(0.5, telemetry);
-            robot.waiting(100);
-            robot.tapeMeasure(0, telemetry);
+        if (tapeIsOutY == true) {
+            robot.runTapeMeasure(0.7, telemetry);
+            robot.waiting(1000);
+            robot.runTapeMeasure(0, telemetry);
+            tapeIsOutY = false;
         } else {
-            robot.tapeMeasure(-0.5, telemetry);
-            robot.waiting(100);
-            robot.tapeMeasure(0, telemetry);
+            robot.runTapeMeasure(0, telemetry);
+        }
+
+        if (gamepad1.x && !xPressed) {//Set claw state to Y button state and check for infinite toggle loops
+            tapeIsOutX = !tapeIsOutX;
+            xPressed = true;
+        }
+        if (gamepad1.x == false){
+            xPressed = false;
+        }
+
+        if (tapeIsOutX == true) {
+            robot.runTapeMeasure(-0.7, telemetry);
+            robot.waiting(900);
+            robot.runTapeMeasure(0, telemetry);
+            tapeIsOutX = false;
+        } else {
+            robot.runTapeMeasure(0, telemetry);
         }
 
 //        if (gamepad1.y && !yPressed) {//Set claw state to Y button state and check for infinite toggle loops

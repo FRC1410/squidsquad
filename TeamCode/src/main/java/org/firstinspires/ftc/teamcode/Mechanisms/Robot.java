@@ -13,7 +13,6 @@ import static org.firstinspires.ftc.teamcode.Util.Constants.*;
 public class Robot { //Initialize subsystems below, otherwise shit hits the fan
     private DriveTrain driveTrain = new DriveTrain();
     private Rotator rotator = new Rotator();
-    private PhoneCamera phone = new PhoneCamera();
     private Claw claw = new Claw();
     private FoundationClaw foundationClaw = new FoundationClaw();
     private LightSensor colorSensor = new LightSensor();
@@ -41,7 +40,7 @@ public class Robot { //Initialize subsystems below, otherwise shit hits the fan
         telemetry.addData("Speeds", speed);
     }
 
-    public void tapeMeasure(double speed, Telemetry telemetry) {
+    public void runTapeMeasure(double speed, Telemetry telemetry) {
         tapeMeasure.setSpeed(speed);
         telemetry.addData("Tape Speed", speed);
     }
